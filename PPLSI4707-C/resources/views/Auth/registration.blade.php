@@ -1,145 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Registrasi Pengguna</title>
-<style>
-body{
-    font-family: Arial, sans-serif;
-    background: #f5f7fa;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-.registration-section{
-    text-align: center;
-}
+        body, html {
+            height: 100%;
+        }
 
-.registration-form{
-    background-color:white;
-    width: 750px;
-    margin: 50px auto;
-    border-radius:30px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    padding:30px;
-}
+        /* Background */
+        .container {
+            position: relative;
+            height: 100vh;
+            background: linear-gradient(rgba(25,55,109,0.9), rgba(25,55,109,0.9)),
+                        url('/images/bg.jpg') center/cover no-repeat;
+        }
 
-.foto img{
-    width:200px;
-    border-radius:20px;
-}
+        /* Shape kiri */
+        .left-shape {
+            position: absolute;
+            width: 30%;
+            height: 100%;
+            background: #eee;
+            clip-path: polygon(0 0, 100% 0, 60% 100%, 0% 100%);
+        }
 
-.form-row{
-    display:flex;
-    gap:40px;
-}
+        /* Title */
+        .title {
+            text-align: center;
+            color: white;
+            padding-top: 30px;
+        }
 
-.wrapper1, .wrapper2{
-    flex:1;
-    text-align:left;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-}
+        .title h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
 
-label{
-    font-size:14px;
-    display:block;
-    margin-bottom:5px;
-}
+        .title p {
+            font-size: 16px;
+        }
 
-input{
-    width:100%;
-    height:40px;
-    border:none;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-    border-radius:20px;
-    padding:0 15px;
-    margin-bottom:15px;
-}
+        /* Card */
+        .card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #f8f8f8;
+            padding: 30px 40px;
+            border-radius: 20px;
+            width: 600px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
 
-input:focus{
-    outline:none;
-    box-shadow: 0 0 0 2px #2563eb;
-}
+        .card h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-button{
-    width:100%;
-    height:45px;
-    border:none;
-    border-radius:25px;
-    background:#2563eb;
-    color:white;
-    font-size:16px;
-    cursor:pointer;
-    transition:0.3s;
-    margin-top:20px;
-}
+        /* Grid form */
+        .grid {
+            display: flex;
+            gap: 20px;
+        }
 
-button:hover{
-    background:#1e4fd1;
-}
+        .col {
+            width: 50%;
+        }
 
-h2{
-    margin-top:20px;
-}
+        label {
+            font-size: 12px;
+        }
 
-@media(max-width:768px){
-    .form-row{
-        flex-direction:column;
-    }
-    .registration-form{
-        width:90%;
-    }
-}
-</style>
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 12px;
+            border-radius: 8px;
+            border: 1px solid #7aa7d9;
+        }
+
+        /* Error */
+        .error {
+            color: red;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        /* Button */
+        button {
+            display: block;
+            margin: 0 auto;
+            background: #0b3c7c;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #082c5c;
+        }
+
+        /* Dropdown kanan bawah */
+        .dropdown {
+            position: absolute;
+            right: 50px;
+            bottom: 50px;
+        }
+
+        .dropdown-btn {
+            background: #eee;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            margin-top: 5px;
+            background: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .dropdown-menu div {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .dropdown-menu div:hover {
+            background: #ddd;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Register - SKOTER</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/register.css') }}">
 </head>
 <body>
 
-<section class="registration-section">
-    <div class="foto">
-        <img src="{{asset('storage/image/login.jpeg') }}" alt="">
+<div class="container">
+
+    <!-- Background kiri -->
+    <div class="left-shape"></div>
+
+    <!-- Judul -->
+    <div class="title">
+        <h1>SKOTER</h1>
+        <p>Sistem Koperasi Terpadu</p>
     </div>
 
-    <h2>SKOTER</h2>
-    <p>Sistem Koperasi Terpadu</p>
+    <!-- Card -->
+    <div class="card">
+        <h3>Registrasi Pengguna</h3>
 
-    <div class="registration-form">
-        <form action="" method="POST">
-            @csrf
+        <form>
+            <div class="grid">
 
-            <div class="form-row">
                 <!-- KIRI -->
-                <div class="wrapper1">
-                    <p><b>Registrasi Pengguna</b></p>
-
+                <div class="col">
                     <label>Nama Depan</label>
-                    <input type="text" name="first_name" required>
+                    <input type="text">
 
                     <label>Nama Belakang</label>
-                    <input type="text" name="last_name" required>
+                    <input type="text">
 
                     <label>Nomor Telepon</label>
-                    <input type="text" name="phone" required>
+                    <input type="text">
                 </div>
 
                 <!-- KANAN -->
-                <div class="wrapper2">
-                    <label>Email</label>
-                    <input type="email" name="email" required>
+                <div class="col">
+                    <label>Alamat Email</label>
+                    <input type="email">
 
                     <label>Password</label>
-                    <input type="password" name="password" required>
+                    <input type="password">
 
                     <label>Konfirmasi Password</label>
-                    <input type="password" name="confirm_password" required>
+                    <input type="password">
                 </div>
+
             </div>
 
-            <!-- BUTTON DI BAWAH -->
+            <p class="error">
+                *Silahkan Sesuaikan Kembali Data yang sudah Anda Input
+            </p>
+
             <button type="submit">Registrasi</button>
         </form>
     </div>
-</section>
+
+    <!-- Dropdown kanan bawah -->
+    <div class="dropdown">
+        <button class="dropdown-btn">Registrasi Sebagai ▾</button>
+        <div class="dropdown-menu">
+            <div>Member</div>
+            <div>Non member</div>
+            <div>Polish Pope</div>
+        </div>
+    </div>
+
+</div>
 
 </body>
 </html>
