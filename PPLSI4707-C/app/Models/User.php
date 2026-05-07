@@ -12,98 +12,62 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
-        'nomor_id_anggota',
-        'nama_lengkap',
+        'name',
         'email',
         'password',
-        'no_ktp',
-        'no_telepon',
-        'alamat',
         'role',
-        'status_keanggotaan',
-        'tanggal_bergabung',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
-            'tanggal_bergabung' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
     }
 
-    /**
-     * Check if user is an admin.
-     */
+    // ─── Helpers ───────────────────────────────────────────────────────────────
+
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
     }
 
-    /**
-     * Check if user is an anggota (member).
-     */
     public function isAnggota(): bool
     {
         return $this->role === 'anggota';
     }
 
-    /**
-     * Check if user membership is active.
-     */
-    public function isAktif(): bool
+    // ─── Relations ─────────────────────────────────────────────────────────────
+
+    public function simpanan()
     {
-        return $this->status_keanggotaan === 'aktif';
+        return $this->hasMany(Simpanan::class);
     }
 
-    /**
-     * Generate a unique member ID.
-     */
-    public static function generateNomorId(): string
+    public function pinjaman()
     {
-        $year = date('Y');
-        $lastUser = static::whereYear('created_at', $year)
-            ->orderBy('id', 'desc')
-            ->first();
-
-        $sequence = $lastUser ? ((int) substr($lastUser->nomor_id_anggota, -4)) + 1 : 1;
-
-        return sprintf('#SL-%s-%04d', $year, $sequence);
+        return $this->hasMany(Pinjaman::class);
     }
 
-    /**
-     * Boot method to auto-generate nomor_id_anggota.
-     */
-    protected static function boot()
-    {
-        parent::boot();
+    // ─── Aggregates ────────────────────────────────────────────────────────────
 
-        static::creating(function ($user) {
-            if (empty($user->nomor_id_anggota)) {
-                $user->nomor_id_anggota = static::generateNomorId();
-            }
-        });
+    public function totalSimpanan(): float
+    {
+        return $this->simpanan()->where('status', 'Success')->sum('jumlah');
+    }
+
+    public function totalSimpananByJenis(string $jenis): float
+    {
+        return $this->simpanan()
+            ->where('jenis_simpanan', $jenis)
+            ->where('status', 'Success')
+            ->sum('jumlah');
     }
 }

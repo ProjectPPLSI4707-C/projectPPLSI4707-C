@@ -1,269 +1,386 @@
-# Sistem Informasi Koperasi Simpan Pinjam
+# 🏦 SKOTER — Sistem Koperasi Terpadu
 
-Aplikasi web untuk manajemen Koperasi Simpan Pinjam yang dibangun menggunakan arsitektur **MVC** dengan **Laravel 11**, **Tailwind CSS v4**, dan **SQLite**.
+<p align="center">
+  <img src="https://img.shields.io/badge/Laravel-13.x-red?style=for-the-badge&logo=laravel" alt="Laravel">
+  <img src="https://img.shields.io/badge/PHP-8.3-blue?style=for-the-badge&logo=php" alt="PHP">
+  <img src="https://img.shields.io/badge/TailwindCSS-v4-38B2AC?style=for-the-badge&logo=tailwind-css" alt="Tailwind">
+  <img src="https://img.shields.io/badge/MySQL-8.0-orange?style=for-the-badge&logo=mysql" alt="MySQL">
+</p>
 
-> **Sprint 1** — Sistem Autentikasi & Manajemen Anggota
-
----
-
-## 📋 Fitur Sprint 1
-
-### Sistem Autentikasi & Keamanan
-- ✅ **Registrasi Anggota** — Formulir pendaftaran (Nama, Email, Password, No. KTP, No. Telepon, Alamat)
-- ✅ **Verifikasi Registrasi** — Status default pendaftar baru: "Menunggu Verifikasi"
-- ✅ **Login Pengguna** — Halaman login untuk Admin dan Anggota
-- ✅ **Keamanan Login** — Password hashing (bcrypt) & proteksi sesi
-- ✅ **Lupa Password** — Fitur reset kata sandi via token
-- ✅ **Logout Pengguna** — Tombol logout fungsional
-- ✅ **Manajemen Hak Akses** — Route protection berdasarkan role (Admin / Anggota)
-
-### Manajemen Anggota (Admin)
-- ✅ **Pendataan Anggota** — Tabel daftar seluruh anggota koperasi
-- ✅ **Pencarian Data** — Search bar untuk cari anggota berdasarkan nama, ID, atau email
-- ✅ **Filter Status** — Filter berdasarkan status keanggotaan (Aktif, Menunggu, Ditangguhkan)
-- ✅ **Detail Anggota** — Halaman profil lengkap anggota
-- ✅ **Edit Data Anggota** — Formulir update informasi anggota
-- ✅ **Hapus Data Anggota** — Tombol hapus dengan konfirmasi
-- ✅ **Verifikasi Anggota** — Setujui/Tolak pendaftaran baru
-- ✅ **Status Keanggotaan** — Badge berwarna (Aktif=hijau, Menunggu=kuning, Ditangguhkan=merah)
+> Aplikasi manajemen koperasi digital berbasis web yang mencakup pengelolaan **Simpanan** (Pokok, Wajib, Sukarela) dan **Pinjaman** dengan fitur simulasi angsuran interaktif dan verifikasi admin.
 
 ---
 
-## 🛠️ Teknologi
+## 📋 Daftar Isi
+
+- [Fitur Utama](#fitur-utama)
+- [Teknologi yang Digunakan](#teknologi-yang-digunakan)
+- [Persyaratan Sistem](#persyaratan-sistem)
+- [Instalasi](#instalasi)
+- [Konfigurasi Database](#konfigurasi-database)
+- [Menjalankan Aplikasi](#menjalankan-aplikasi)
+- [Akun Demo](#akun-demo)
+- [Panduan Penggunaan — Anggota](#panduan-penggunaan--anggota)
+- [Panduan Penggunaan — Admin](#panduan-penggunaan--admin)
+- [Struktur Database](#struktur-database)
+- [Struktur Folder](#struktur-folder)
+- [Troubleshooting](#troubleshooting)
+
+---
+
+## ✨ Fitur Utama
+
+### 👤 Anggota
+- **Dashboard** — Ringkasan saldo simpanan per jenis dan status pinjaman aktif
+- **Bayar Simpanan** — Input pembayaran 3 jenis simpanan (Pokok, Wajib, Sukarela) beserta unggah bukti bayar
+- **Riwayat Simpanan** — Histori transaksi dengan filter jenis dan badge status (Pending/Success)
+- **Simulasi Pinjaman** — Kalkulator angsuran interaktif real-time (slider tenor, input jumlah)
+- **Ajukan Pinjaman** — Form pengajuan dengan unggah dokumen pendukung
+- **Status Pinjaman** — Pantau pengajuan pinjaman (Diajukan/Disetujui/Ditolak) beserta catatan admin
+
+### 👨‍💼 Admin
+- **Dashboard** — Statistik total anggota, dana simpanan, pinjaman aktif, dan item pending
+- **Notifikasi Badge** — Indikator merah di sidebar untuk setiap pengajuan baru yang belum diproses
+- **Verifikasi Simpanan** — Tinjau bukti pembayaran dan ubah status ke Success
+- **Persetujuan Pinjaman** — Tinjau detail pengajuan, riwayat simpanan anggota, dan rasio kelayakan
+- **Approve / Reject** — Putuskan pengajuan pinjaman dengan catatan admin
+
+---
+
+## 🛠️ Teknologi yang Digunakan
 
 | Komponen | Teknologi |
 |----------|-----------|
-| Framework | Laravel 11 (PHP 8.2+) |
-| CSS Framework | Tailwind CSS v4 |
-| Database | SQLite |
-| Build Tool | Vite 6 |
-| Arsitektur | MVC (Model-View-Controller) |
+| Backend Framework | Laravel 13 (PHP 8.3) |
+| Frontend Styling | Tailwind CSS v4 + Vanilla CSS |
+| Build Tool | Vite 8 |
+| Database | MySQL 8 |
+| Authentication | Session-based (Laravel built-in) |
+| File Upload | Laravel Storage (local disk) |
 
 ---
 
-## ⚙️ Prasyarat (Prerequisites)
+## ⚙️ Persyaratan Sistem
 
-Pastikan perangkat Anda sudah terinstal:
+Pastikan komputer Anda memiliki:
 
-1. **PHP** versi 8.2 atau lebih baru
-   ```bash
-   php -v
-   ```
-2. **Composer** (dependency manager PHP)
-   ```bash
-   composer --version
-   ```
-3. **Node.js** versi 18+ dan **npm**
-   ```bash
-   node -v
-   npm -v
-   ```
-4. **Ekstensi PHP** yang diperlukan:
-   - `pdo_sqlite`
-   - `mbstring`
-   - `openssl`
-   - `tokenizer`
-   - `xml`
-   - `ctype`
-   - `json`
-   - `bcmath`
+- **PHP** versi 8.3 atau lebih baru
+- **Composer** versi 2.x
+- **Node.js** versi 18+ dan **npm**
+- **MySQL** versi 8.0+ (lokal atau remote)
+- **Web server** — dapat menggunakan `php artisan serve`, Laragon, XAMPP, atau Herd
 
 ---
 
-## 🚀 Cara Menjalankan Aplikasi
+## 🚀 Instalasi
 
-### 1. Clone Repository
+### Langkah 1 — Clone Repository
 
 ```bash
-git clone <url-repository>
-cd PPLSI4707-C
+git clone https://github.com/username/projectPPLSI4707-C.git
+cd projectPPLSI4707-C/PPLSI4707-C
 ```
 
-### 2. Install Dependency PHP (Composer)
+### Langkah 2 — Install Dependensi PHP
 
 ```bash
 composer install
 ```
 
-### 3. Install Dependency JavaScript (NPM)
+### Langkah 3 — Install Dependensi Node.js
 
 ```bash
 npm install
 ```
 
-### 4. Konfigurasi Environment
-
-Salin file `.env.example` menjadi `.env`:
+### Langkah 4 — Salin File Konfigurasi
 
 ```bash
-# Linux / Mac
 cp .env.example .env
-
-# Windows (Command Prompt)
-copy .env.example .env
-
-# Windows (PowerShell)
-Copy-Item .env.example .env
 ```
 
-### 5. Generate Application Key
+### Langkah 5 — Generate Application Key
 
 ```bash
 php artisan key:generate
 ```
 
-### 6. Buat File Database SQLite
+---
 
-```bash
-# Linux / Mac
-touch database/database.sqlite
+## 🗄️ Konfigurasi Database
 
-# Windows (PowerShell)
-New-Item -ItemType File -Path database/database.sqlite -Force
+### Buka file `.env` dan sesuaikan bagian berikut:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1        # Ganti sesuai host MySQL Anda
+DB_PORT=3306             # Ganti sesuai port MySQL Anda
+DB_DATABASE=skoter       # Nama database (akan dibuat otomatis)
+DB_USERNAME=root         # Username MySQL Anda
+DB_PASSWORD=             # Password MySQL Anda
 ```
 
-### 7. Jalankan Migrasi & Seeder Database
+### Buat Database
 
-```bash
-php artisan migrate:fresh --seed
+Buat database bernama `skoter` di MySQL Anda:
+
+```sql
+CREATE DATABASE skoter CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-Perintah ini akan membuat semua tabel dan mengisi data dummy:
+Atau via terminal:
 
-| Email | Password | Role | Status |
-|-------|----------|------|--------|
-| `admin@koperasi.com` | `admin123` | Admin | Aktif |
-| `budi@email.com` | `password` | Anggota | Aktif |
-| `siti@email.com` | `password` | Anggota | Aktif |
-| `ahmad@email.com` | `password` | Anggota | Menunggu |
-| `dewi@email.com` | `password` | Anggota | Menunggu |
-| `rudi@email.com` | `password` | Anggota | Ditangguhkan |
+```bash
+mysql -u root -p -e "CREATE DATABASE skoter CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+```
 
-### 8. Jalankan Server
+### Jalankan Migration dan Seeder
+
+```bash
+php artisan migrate --seed
+```
+
+> Perintah ini akan membuat semua tabel dan mengisi data awal (3 user + 6 simpanan + 2 pinjaman dummy).
+
+> **Reset data (jika diperlukan):**
+> ```bash
+> php artisan migrate:fresh --seed
+> ```
+
+### Buat Storage Link (untuk file upload)
+
+```bash
+php artisan storage:link
+```
+
+---
+
+## ▶️ Menjalankan Aplikasi
+
+### Mode Development (disarankan)
 
 Buka **2 terminal** secara bersamaan:
 
-**Terminal 1** — Laravel Development Server:
+**Terminal 1 — Laravel Server:**
 ```bash
 php artisan serve
 ```
 
-**Terminal 2** — Vite (Tailwind CSS & Asset Bundling):
+**Terminal 2 — Vite (Hot Reload):**
 ```bash
 npm run dev
 ```
 
-### 9. Buka Aplikasi di Browser
+Aplikasi dapat diakses di: **http://127.0.0.1:8000**
 
-```
-http://127.0.0.1:8000
-```
+### Mode Production
 
-> ⚠️ **Penting:** Kedua server (PHP artisan serve & npm run dev) harus berjalan bersamaan agar CSS & JavaScript ter-load dengan benar.
+```bash
+npm run build
+php artisan serve
+```
 
 ---
 
-## 📖 Panduan Penggunaan
+## 🔐 Akun Demo
 
-### Login sebagai Admin
+Setelah menjalankan seeder, gunakan akun berikut untuk login:
 
-1. Buka `http://127.0.0.1:8000/login`
-2. Masukkan email: `admin@koperasi.com`
-3. Masukkan password: `admin123`
-4. Klik **"Masuk"**
-
-### Dashboard Admin
-
-Setelah login, Admin akan melihat:
-- **4 kartu statistik** — Total Anggota, Aktif, Menunggu Verifikasi, Ditangguhkan
-- **Pendaftaran Terbaru** — Daftar pendaftar baru yang bisa langsung disetujui/ditolak
-- **Aksi Cepat** — Pintasan ke menu utama
-
-### Manajemen Anggota
-
-Klik **"Manajemen Anggota"** di sidebar untuk:
-- 🔍 **Cari anggota** — Ketik nama/ID/email di search bar, lalu klik "Cari"
-- 🔽 **Filter status** — Pilih status dari dropdown (Semua, Aktif, Menunggu, Ditangguhkan)
-- 👁️ **Lihat detail** — Klik ikon mata pada baris anggota
-- ✏️ **Edit data** — Klik ikon pensil atau tombol "Edit Data Anggota" di halaman detail
-- ✅ **Verifikasi** — Klik ikon centang (untuk anggota berstatus "Menunggu")
-- 🗑️ **Hapus anggota** — Klik ikon tempat sampah (dengan konfirmasi)
-- 🔄 **Ubah status** — Di halaman detail, klik "Aktifkan" atau "Tangguhkan"
-
-### Registrasi Anggota Baru
-
-1. Di halaman login, klik **"Daftar sekarang"**
-2. Isi formulir lengkap (Nama, Email, Password, No. KTP, No. Telepon, Alamat)
-3. Klik **"Daftar Sekarang"**
-4. Akun baru akan berstatus **"Menunggu Verifikasi"**
-5. Admin harus menyetujui pendaftaran sebelum anggota dapat menggunakan fitur
-
-### Login sebagai Anggota
-
-1. Buka `http://127.0.0.1:8000/login`
-2. Gunakan salah satu akun anggota (contoh: `budi@email.com` / `password`)
-3. Anggota akan melihat dashboard profil pribadi mereka
-
-### Lupa Password
-
-1. Di halaman login, klik **"Lupa password?"**
-2. Masukkan email yang terdaftar
-3. Sistem akan membuat link reset (untuk demo, langsung redirect ke form reset)
-4. Masukkan password baru dan konfirmasi
-5. Login dengan password baru
-
-### Logout
-
-Klik ikon logout (panah keluar) di bagian bawah sidebar, sebelah nama pengguna.
+| Role | Email | Password | Keterangan |
+|------|-------|----------|-----------|
+| **Admin** | admin@skoter.id | password | Akses penuh verifikasi |
+| **Anggota** | budi@skoter.id | password | Anggota dengan riwayat simpanan |
+| **Anggota** | siti@skoter.id | password | Anggota dengan pinjaman pending |
 
 ---
 
-## 📁 Struktur Proyek (MVC)
+## 👤 Panduan Penggunaan — Anggota
 
-```
-PPLSI4707-C/
-├── app/
-│   ├── Http/
-│   │   ├── Controllers/
-│   │   │   ├── AuthController.php      # Controller autentikasi
-│   │   │   ├── AdminController.php     # Controller dashboard & manajemen anggota
-│   │   │   └── AnggotaController.php   # Controller dashboard anggota
-│   │   └── Middleware/
-│   │       └── RoleMiddleware.php      # Middleware proteksi role
-│   └── Models/
-│       └── User.php                    # Model User (Anggota/Admin)
-├── database/
-│   ├── migrations/                     # Struktur tabel database
-│   ├── seeders/
-│   │   └── DatabaseSeeder.php          # Data dummy (1 Admin + 5 Anggota)
-│   └── factories/
-│       └── UserFactory.php             # Factory untuk testing
-├── resources/
-│   ├── css/
-│   │   └── app.css                     # Konfigurasi Tailwind CSS + tema kustom
-│   └── views/
-│       ├── layouts/
-│       │   ├── app.blade.php           # Layout utama (sidebar + konten)
-│       │   └── guest.blade.php         # Layout halaman publik
-│       ├── auth/
-│       │   ├── login.blade.php         # Halaman login
-│       │   ├── register.blade.php      # Halaman registrasi
-│       │   ├── forgot-password.blade.php
-│       │   └── reset-password.blade.php
-│       ├── admin/
-│       │   ├── dashboard.blade.php     # Dashboard admin
-│       │   └── anggota/
-│       │       ├── index.blade.php     # Tabel manajemen anggota
-│       │       ├── show.blade.php      # Detail profil anggota
-│       │       └── edit.blade.php      # Form edit anggota
-│       └── anggota/
-│           └── dashboard.blade.php     # Dashboard anggota
-├── routes/
-│   └── web.php                         # Definisi semua route
-├── bootstrap/
-│   └── app.php                         # Konfigurasi middleware
-└── .env                                # Konfigurasi environment
-```
+### 1. Login
+
+1. Buka **http://127.0.0.1:8000**
+2. Masukkan **email** dan **password** anggota
+3. Klik tombol **"Masuk"**
+4. Sistem akan mengarahkan otomatis ke **Dashboard Anggota**
+
+---
+
+### 2. Melihat Dashboard
+
+Setelah login, halaman **Dashboard** menampilkan:
+- **Total Simpanan** — Akumulasi semua simpanan yang telah terverifikasi
+- **Simpanan Pokok** — Total simpanan jenis Pokok
+- **Simpanan Wajib** — Total simpanan jenis Wajib
+- **Simpanan Sukarela** — Total simpanan jenis Sukarela
+- **Status Pinjaman** — Apakah ada pinjaman aktif atau sedang pending
+- **Riwayat Terbaru** — 5 transaksi terakhir
+
+---
+
+### 3. Membayar Simpanan
+
+1. Klik menu **"Bayar Simpanan"** di sidebar kiri
+2. Pilih **jenis simpanan** dengan mengklik salah satu kartu:
+   - 📌 **Pokok** — Simpanan awal keanggotaan, dibayar sekali
+   - 📅 **Wajib** — Dibayar rutin setiap bulan
+   - 💰 **Sukarela** — Dapat dibayar kapan saja
+3. Masukkan **nominal pembayaran** (minimal Rp 1.000)
+4. Klik area **"Klik untuk memilih file"** untuk mengunggah bukti pembayaran
+   - Format yang diterima: **JPG, PNG, PDF**
+   - Ukuran maksimal: **2 MB**
+5. Klik tombol **"Kirim Pembayaran"**
+6. Transaksi akan masuk ke riwayat dengan status **Pending** menunggu verifikasi admin
+
+---
+
+### 4. Melihat Riwayat Simpanan
+
+1. Klik menu **"Riwayat Simpanan"** di sidebar
+2. Halaman menampilkan:
+   - **3 kartu ringkasan** — total per jenis simpanan yang sudah terverifikasi
+   - **Tabel transaksi** — daftar semua transaksi dengan kolom: Jenis, Tanggal, Nominal, Bukti, Status
+3. Gunakan **tombol filter** di atas tabel untuk menyaring berdasarkan jenis simpanan:
+   - `Semua` | `Pokok` | `Wajib` | `Sukarela`
+4. Badge status:
+   - 🟡 **Pending** — Menunggu verifikasi admin
+   - 🟢 **Success** — Sudah diverifikasi
+
+---
+
+### 5. Simulasi Pinjaman
+
+1. Klik menu **"Ajukan Pinjaman"** di sidebar
+2. Di sisi **kanan halaman**, terdapat widget **Simulasi Angsuran** (berwarna navy)
+3. Cara menggunakan simulator:
+   - Ketik **jumlah pinjaman** di kolom input (contoh: `5000000`)
+   - Geser **slider tenor** untuk memilih jangka waktu (1–60 bulan)
+   - Hasil kalkulasi muncul **otomatis secara real-time**:
+     - 💛 **Angsuran/Bulan** — Cicilan yang harus dibayar tiap bulan
+     - **Total Bunga** — Total biaya bunga selama tenor
+     - **Total Pengembalian** — Total yang harus dikembalikan
+4. Klik **"Gunakan Angka Ini di Form"** untuk menyalin hasil simulasi ke form pengajuan
+
+> **Rumus bunga flat:** Angsuran = (Pokok ÷ Tenor) + (Pokok × 1%)
+
+---
+
+### 6. Mengajukan Pinjaman
+
+1. Klik menu **"Ajukan Pinjaman"** di sidebar
+2. Isi form pengajuan di sisi kiri:
+   - **Jumlah Pinjaman** — Minimal Rp 500.000
+   - **Tenor** — Pilih dari dropdown (3, 6, 12, 18, 24, 36, 48, atau 60 bulan)
+   - **Tujuan / Alasan Pinjaman** — Jelaskan keperluan pinjaman (minimal 20 karakter)
+   - **Dokumen Pendukung** _(opsional)_ — KTP, slip gaji, dll (JPG/PNG/PDF, maks 5 MB)
+3. Klik tombol **"🚀 Ajukan Pinjaman"**
+4. Pengajuan masuk ke status **"Diajukan"** dan menunggu keputusan admin
+
+---
+
+### 7. Memantau Status Pinjaman
+
+1. Klik menu **"Status Pinjaman"** di sidebar
+2. Tabel menampilkan semua riwayat pengajuan dengan informasi:
+   - Tanggal pengajuan, jumlah, tenor, angsuran/bulan, tujuan
+   - **Badge status:**
+     - 🟡 **Diajukan** — Menunggu keputusan admin
+     - 🟢 **Disetujui** — Pinjaman disetujui
+     - 🔴 **Ditolak** — Pinjaman ditolak
+   - **Catatan admin** — Alasan persetujuan atau penolakan
+
+---
+
+### 8. Logout
+
+Klik tombol **"Keluar"** (ikon pintu) di bagian bawah sidebar kiri.
+
+---
+
+## 👨‍💼 Panduan Penggunaan — Admin
+
+### 1. Login sebagai Admin
+
+1. Buka **http://127.0.0.1:8000**
+2. Masukkan email: **admin@skoter.id** dan password: **password**
+3. Klik **"Masuk"** — sistem mengarahkan ke **Dashboard Admin**
+
+---
+
+### 2. Dashboard Admin
+
+Halaman dashboard menampilkan:
+- **👥 Total Anggota** — Jumlah anggota terdaftar
+- **🏦 Total Dana Simpanan** — Akumulasi simpanan yang terverifikasi
+- **⏳ Simpanan Pending** — Jumlah simpanan belum diverifikasi _(klik untuk langsung ke halaman verifikasi)_
+- **⏳ Pinjaman Pending** — Jumlah pinjaman belum diputuskan
+- **💳 Total Pinjaman Aktif** — Total nilai pinjaman yang disetujui
+- **Daftar Pending Terbaru** — 5 simpanan dan 5 pinjaman terbaru yang menunggu tindakan
+
+> 💡 **Notifikasi Badge**: Angka merah di menu **Simpanan** dan **Pinjaman** di sidebar menunjukkan berapa item yang memerlukan perhatian admin.
+
+---
+
+### 3. Verifikasi Simpanan
+
+#### Melihat Daftar Simpanan
+
+1. Klik menu **"Simpanan"** di sidebar
+2. Gunakan **filter** di atas tabel untuk menyaring:
+   - **Status**: `⏳ Pending` | `✅ Terverifikasi` | `📋 Semua`
+   - **Jenis**: `Semua` | `Pokok` | `Wajib` | `Sukarela`
+3. Tabel menampilkan: Nama Anggota, Jenis, Nominal, Tanggal, Bukti, Status
+
+#### Memverifikasi Simpanan
+
+1. Klik tombol **"Detail & Verifikasi"** pada baris simpanan yang berstatus Pending
+2. Halaman detail menampilkan:
+   - **Informasi transaksi** — nama, email, jenis, nominal, tanggal, status
+   - **Riwayat simpanan** — semua simpanan anggota tersebut
+   - **Bukti pembayaran** — tampilan gambar langsung atau link PDF
+3. Periksa bukti pembayaran dengan teliti
+4. Jika valid, klik tombol **"✅ Verifikasi — Tandai Success"**
+5. Klik **OK** pada dialog konfirmasi
+6. Status simpanan berubah menjadi **Success** dan saldo simpanan anggota bertambah
+
+---
+
+### 4. Verifikasi Pinjaman
+
+#### Melihat Daftar Pinjaman
+
+1. Klik menu **"Pinjaman"** di sidebar
+2. Gunakan **filter status**: `⏳ Pending` | `✅ Disetujui` | `❌ Ditolak` | `📋 Semua`
+3. Tabel menampilkan: Nama Anggota, Jumlah, Tenor, Angsuran/Bulan, Tujuan, Tanggal, Status
+
+#### Meninjau dan Memutuskan Pinjaman
+
+1. Klik tombol **"Putuskan"** pada baris pinjaman yang berstatus Pending
+2. Halaman detail menampilkan:
+
+   **Kolom Kiri:**
+   - Detail pinjaman (jumlah, tenor, bunga, angsuran, total pengembalian)
+   - Tujuan pinjaman
+   - Dokumen pendukung (jika ada)
+
+   **Kolom Kanan:**
+   - 🏦 **Ringkasan Simpanan Anggota** — saldo Pokok, Wajib, Sukarela, dan Total
+   - 📊 **Rasio Pinjaman vs Simpanan** — indikator kelayakan:
+     - 🟢 ≤ 3x — Rasio aman
+     - 🟡 ≤ 5x — Rasio cukup tinggi
+     - 🔴 > 5x — Rasio sangat tinggi
+   - 📋 Riwayat 10 simpanan terakhir anggota
+
+3. **Untuk MENYETUJUI pinjaman:**
+   - Isi kolom **"Catatan Persetujuan"** (opsional, sudah terisi default)
+   - Klik **"✅ Setujui Pinjaman"**
+   - Klik **OK** pada dialog konfirmasi
+
+4. **Untuk MENOLAK pinjaman:**
+   - Isi kolom **"Alasan Penolakan"** (wajib diisi)
+   - Klik **"❌ Tolak Pinjaman"**
+   - Klik **OK** pada dialog konfirmasi
+
+5. Status pinjaman diperbarui dan catatan admin tersimpan untuk dilihat anggota
 
 ---
 
@@ -272,41 +389,138 @@ PPLSI4707-C/
 ### Tabel `users`
 
 | Kolom | Tipe | Keterangan |
-|-------|------|------------|
-| `id` | bigint (PK) | Auto increment |
-| `nomor_id_anggota` | string (unique) | Format: #SL-2026-XXXX |
-| `nama_lengkap` | string | Nama lengkap pengguna |
-| `email` | string (unique) | Email untuk login |
-| `password` | string | Password (hashed bcrypt) |
-| `no_ktp` | string | Nomor KTP |
-| `no_telepon` | string | Nomor telepon |
-| `alamat` | text | Alamat lengkap |
-| `role` | enum | `admin` atau `anggota` |
-| `status_keanggotaan` | enum | `menunggu`, `aktif`, `ditangguhkan` |
-| `tanggal_bergabung` | timestamp | Tanggal bergabung |
-| `email_verified_at` | timestamp | Timestamp verifikasi email |
-| `remember_token` | string | Token "remember me" |
-| `created_at` | timestamp | Dibuat pada |
-| `updated_at` | timestamp | Diperbarui pada |
+|-------|------|-----------|
+| id | BIGINT | Primary key |
+| name | VARCHAR | Nama lengkap |
+| email | VARCHAR | Email unik |
+| password | VARCHAR | Password (hashed) |
+| role | ENUM | `admin` atau `anggota` |
+| created_at | TIMESTAMP | Waktu registrasi |
+
+### Tabel `simpanan`
+
+| Kolom | Tipe | Keterangan |
+|-------|------|-----------|
+| id | BIGINT | Primary key |
+| user_id | BIGINT | Foreign key ke users |
+| jenis_simpanan | ENUM | `Pokok`, `Wajib`, `Sukarela` |
+| jumlah | DECIMAL(15,2) | Nominal simpanan |
+| bukti_bayar | VARCHAR | Path file bukti pembayaran |
+| status | ENUM | `Pending`, `Success` |
+| created_at | TIMESTAMP | Tanggal transaksi |
+
+### Tabel `pinjaman`
+
+| Kolom | Tipe | Keterangan |
+|-------|------|-----------|
+| id | BIGINT | Primary key |
+| user_id | BIGINT | Foreign key ke users |
+| jumlah_pinjaman | DECIMAL(15,2) | Nominal pinjaman |
+| tenor | TINYINT | Jangka waktu (bulan) |
+| bunga_pinjaman | DECIMAL(5,2) | Bunga % per bulan (default: 1.00) |
+| tujuan_pinjaman | TEXT | Alasan pengajuan |
+| dokumen_pendukung | VARCHAR | Path file dokumen |
+| status_pengajuan | ENUM | `Pending`, `Approved`, `Rejected` |
+| tanggal_pengajuan | DATE | Tanggal pengajuan |
+| catatan_admin | TEXT | Catatan dari admin |
+| created_at | TIMESTAMP | Waktu buat |
 
 ---
 
-## 🔐 Keamanan
+## 📁 Struktur Folder (Sprint 3)
 
-- **Password Hashing**: Bcrypt (via Laravel `Hash` facade)
-- **CSRF Protection**: Token CSRF pada setiap form
-- **Session Security**: Regenerasi session setelah login, invalidasi session saat logout
-- **Route Protection**: Middleware `auth` dan `role` untuk proteksi halaman
-- **Validation**: Server-side validation pada semua input form
+```
+app/
+├── Http/
+│   ├── Controllers/
+│   │   ├── Admin/
+│   │   │   ├── DashboardController.php
+│   │   │   ├── SimpananController.php
+│   │   │   └── PinjamanController.php
+│   │   ├── Anggota/
+│   │   │   ├── DashboardController.php
+│   │   │   ├── SimpananController.php
+│   │   │   └── PinjamanController.php
+│   │   └── Auth/
+│   │       └── LoginController.php
+│   └── Middleware/
+│       └── RoleMiddleware.php
+├── Models/
+│   ├── User.php
+│   ├── Simpanan.php
+│   └── Pinjaman.php
+database/
+├── migrations/
+│   ├── ..._add_role_to_users_table.php
+│   ├── ..._create_simpanan_table.php
+│   └── ..._create_pinjaman_table.php
+└── seeders/
+    └── DatabaseSeeder.php
+resources/views/
+├── auth/
+│   └── login.blade.php
+├── layouts/
+│   ├── app.blade.php
+│   └── partials/
+│       ├── sidebar-admin.blade.php
+│       └── sidebar-anggota.blade.php
+├── admin/
+│   ├── dashboard.blade.php
+│   ├── simpanan/ (index.blade.php, show.blade.php)
+│   └── pinjaman/ (index.blade.php, show.blade.php)
+└── anggota/
+    ├── dashboard.blade.php
+    ├── simpanan/ (index.blade.php, create.blade.php)
+    └── pinjaman/ (index.blade.php, create.blade.php)
+routes/
+└── web.php
+```
+
+---
+
+## 🔧 Troubleshooting
+
+### ❌ Error "Class not found"
+```bash
+composer dump-autoload
+```
+
+### ❌ Halaman kosong / error 500
+```bash
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+```
+
+### ❌ File upload tidak tampil
+```bash
+php artisan storage:link
+```
+
+### ❌ Error koneksi database
+- Pastikan MySQL berjalan
+- Cek konfigurasi `DB_HOST`, `DB_PORT`, `DB_USERNAME`, `DB_PASSWORD` di `.env`
+- Pastikan database `skoter` sudah dibuat
+
+### ❌ Reset semua data ke kondisi awal
+```bash
+php artisan migrate:fresh --seed
+```
+
+### ❌ Vite / CSS tidak termuat
+```bash
+npm install
+npm run build
+```
+
+---
+
+## 📜 Lisensi
+
+Proyek ini dibuat untuk keperluan akademik mata kuliah **Pemrograman Perangkat Lunak (PPL) SI4707** — Kelompok C.
 
 ---
 
 ## 👥 Tim Pengembang
 
-**PPLSI4707-C**
-
----
-
-## 📄 Lisensi
-
-MIT License
+Universitas | Program Studi Sistem Informasi | 2026

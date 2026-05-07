@@ -13,17 +13,10 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('nomor_id_anggota')->unique();
-            $table->string('nama_lengkap');
+            $table->string('name');
             $table->string('email')->unique();
-            $table->string('password');
-            $table->string('no_ktp')->nullable();
-            $table->string('no_telepon')->nullable();
-            $table->text('alamat')->nullable();
-            $table->enum('role', ['admin', 'anggota'])->default('anggota');
-            $table->enum('status_keanggotaan', ['menunggu', 'aktif', 'ditangguhkan'])->default('menunggu');
-            $table->timestamp('tanggal_bergabung')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
