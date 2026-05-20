@@ -37,6 +37,11 @@ class Pinjaman extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function angsuran()
+    {
+        return $this->hasMany(AngsuranPinjaman::class);
+    }
+
     // ─── Scopes ────────────────────────────────────────────────────────────────
 
     public function scopePending($query)

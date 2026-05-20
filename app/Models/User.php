@@ -56,6 +56,11 @@ class User extends Authenticatable
         return $this->hasMany(Pinjaman::class);
     }
 
+    public function angsuranPinjaman()
+    {
+        return $this->hasMany(AngsuranPinjaman::class);
+    }
+
     // ─── Aggregates ────────────────────────────────────────────────────────────
 
     public function totalSimpanan(): float

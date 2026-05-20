@@ -31,6 +31,10 @@ Route::prefix('anggota')->name('anggota.')->middleware(['auth', 'role:anggota'])
     Route::get('/pinjaman/ajukan',       [Anggota\PinjamanController::class, 'create'])->name('pinjaman.create');
     Route::post('/pinjaman',             [Anggota\PinjamanController::class, 'store'])->name('pinjaman.store');
     Route::post('/pinjaman/simulasi',    [Anggota\PinjamanController::class, 'simulasi'])->name('pinjaman.simulasi');
+
+    // Angsuran
+    Route::get('/angsuran/baru',         [Anggota\AngsuranPinjamanController::class, 'create'])->name('angsuran.create');
+    Route::post('/angsuran',             [Anggota\AngsuranPinjamanController::class, 'store'])->name('angsuran.store');
 });
 
 // ─── Admin ────────────────────────────────────────────────────────────────────
