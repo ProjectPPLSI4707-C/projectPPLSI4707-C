@@ -35,6 +35,11 @@ Route::prefix('anggota')->name('anggota.')->middleware(['auth', 'role:anggota'])
     // Angsuran
     Route::get('/angsuran/baru',         [Anggota\AngsuranPinjamanController::class, 'create'])->name('angsuran.create');
     Route::post('/angsuran',             [Anggota\AngsuranPinjamanController::class, 'store'])->name('angsuran.store');
+
+    // Profile
+    Route::get('/profile',              [Anggota\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile',              [Anggota\ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password',     [Anggota\ProfileController::class, 'updatePassword'])->name('profile.password');
 });
 
 // ─── Admin ────────────────────────────────────────────────────────────────────
