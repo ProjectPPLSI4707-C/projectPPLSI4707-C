@@ -31,6 +31,18 @@ Route::prefix('anggota')->name('anggota.')->middleware(['auth', 'role:anggota'])
     Route::get('/pinjaman/ajukan',       [Anggota\PinjamanController::class, 'create'])->name('pinjaman.create');
     Route::post('/pinjaman',             [Anggota\PinjamanController::class, 'store'])->name('pinjaman.store');
     Route::post('/pinjaman/simulasi',    [Anggota\PinjamanController::class, 'simulasi'])->name('pinjaman.simulasi');
+<<<<<<< Updated upstream:PPLSI4707-C/routes/web.php
+=======
+
+    // Angsuran
+    Route::get('/angsuran/baru',         [Anggota\AngsuranPinjamanController::class, 'create'])->name('angsuran.create');
+    Route::post('/angsuran',             [Anggota\AngsuranPinjamanController::class, 'store'])->name('angsuran.store');
+
+    // Profile
+    Route::get('/profile',              [Anggota\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile',              [Anggota\ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password',     [Anggota\ProfileController::class, 'updatePassword'])->name('profile.password');
+>>>>>>> Stashed changes:routes/web.php
 });
 
 // ─── Admin ────────────────────────────────────────────────────────────────────
