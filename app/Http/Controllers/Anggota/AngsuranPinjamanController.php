@@ -55,6 +55,7 @@ class AngsuranPinjamanController extends Controller
             'bukti_bayar'   => $path,
             'status'        => 'Pending',
         ]);
+
         return redirect()
             ->route('anggota.angsuran.create')
             ->with('success', 'Pembayaran angsuran berhasil diajukan. Menunggu verifikasi admin.');
