@@ -19,7 +19,14 @@ class DashboardController extends Controller
         $pinjamanAktif  = $user->pinjaman()->where('status_pengajuan', 'Approved')->latest()->first();
         $pinjamanPending = $user->pinjaman()->where('status_pengajuan', 'Pending')->count();
 
-        $riwayatTerbaru = $user->simpanan()->latest()->take(5)->get();
+        $riwayatTerbaru = $user->simpanan()
+            ->latest()
+            ->take(5)
+            ->get()
+            ->concat($user->angsuranPinjaman()->latest()->take(5)->get())
+            ->sortByDesc('created_at')
+            ->take(5)
+            ->values();
 
         return view('anggota.dashboard', compact(
             'user',
