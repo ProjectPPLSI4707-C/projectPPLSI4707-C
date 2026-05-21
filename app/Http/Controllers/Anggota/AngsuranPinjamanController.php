@@ -55,9 +55,27 @@ class AngsuranPinjamanController extends Controller
             'bukti_bayar'   => $path,
             'status'        => 'Pending',
         ]);
-
         return redirect()
             ->route('anggota.angsuran.create')
             ->with('success', 'Pembayaran angsuran berhasil diajukan. Menunggu verifikasi admin.');
+    }
+    public function show(AngsuranPinjaman $angsuran)
+    {
+        if ($angsuran->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $angsuran->load('pinjaman.angsuran');
+        
+        $pinjaman = $angsuran->pinjaman;
+        
+        $angsuranDibayar = $pinjaman->angsuran->where('status', 'Success')->count();
+        $totalDibayar    = $pinjaman->angsuran->where('status', 'Success')->sum('jumlah');
+        $totalPengembalian = $pinjaman->totalPengembalian();
+        
+        $sisaTenor   = max(0, $pinjaman->tenor - $angsuranDibayar);
+        $sisaTagihan = max(0, $totalPengembalian - $totalDibayar);
+
+        return view('anggota.angsuran.show', compact('angsuran', 'sisaTenor', 'sisaTagihan'));
     }
 }
