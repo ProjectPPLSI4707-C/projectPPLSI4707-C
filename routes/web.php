@@ -35,6 +35,10 @@ Route::prefix('anggota')->name('anggota.')->middleware(['auth', 'role:anggota'])
     // Angsuran
     Route::get('/angsuran/baru',         [Anggota\AngsuranPinjamanController::class, 'create'])->name('angsuran.create');
     Route::post('/angsuran',             [Anggota\AngsuranPinjamanController::class, 'store'])->name('angsuran.store');
+    Route::get('/angsuran/{angsuran}',   [Anggota\AngsuranPinjamanController::class, 'show'])->name('angsuran.show');
+
+    // Tagihan
+    Route::get('/tagihan',              [Anggota\TagihanController::class, 'index'])->name('tagihan.index');
 
     // Profile
     Route::get('/profile',              [Anggota\ProfileController::class, 'edit'])->name('profile.edit');
