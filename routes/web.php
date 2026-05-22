@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Anggota;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 // ─── Root redirect ────────────────────────────────────────────────────────────
@@ -14,6 +15,8 @@ Route::get('/', function () {
 Route::get('/login',  [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/register',  [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
 
 // ─── Anggota ──────────────────────────────────────────────────────────────────
 Route::prefix('anggota')->name('anggota.')->middleware(['auth', 'role:anggota'])->group(function () {
@@ -35,6 +38,10 @@ Route::prefix('anggota')->name('anggota.')->middleware(['auth', 'role:anggota'])
     // Angsuran
     Route::get('/angsuran/baru',         [Anggota\AngsuranPinjamanController::class, 'create'])->name('angsuran.create');
     Route::post('/angsuran',             [Anggota\AngsuranPinjamanController::class, 'store'])->name('angsuran.store');
+    Route::get('/angsuran/{angsuran}',   [Anggota\AngsuranPinjamanController::class, 'show'])->name('angsuran.show');
+
+    // Tagihan
+    Route::get('/tagihan',              [Anggota\TagihanController::class, 'index'])->name('tagihan.index');
 
     // Profile
     Route::get('/profile',              [Anggota\ProfileController::class, 'edit'])->name('profile.edit');
