@@ -8,10 +8,10 @@
         <h2>Bayar Angsuran</h2>
         <p>Input pembayaran angsuran pinjaman dan unggah bukti pembayaran</p>
     </div>
-    <a href="{{ route('anggota.pinjaman.index') }}" class="btn btn-outline">← Kembali</a>
+    <a href="{{ route('anggota.pinjaman.index') }}" class="btn btn-danger">Kembali</a>
 </div>
 
-<div style="max-width:720px;">
+<div style="width:100%;max-width:980px;margin:0 auto;">
     <div class="card">
         <div class="card-title">💳 Form Pembayaran Angsuran</div>
 
