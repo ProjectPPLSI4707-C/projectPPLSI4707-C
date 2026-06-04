@@ -32,9 +32,9 @@ class AngsuranPinjamanController extends Controller
 
     public function verify(AngsuranPinjaman $angsuran)
     {
-        // Pilihan 1: Mengubah status angsuran menjadi Success
         $angsuran->update([
-            'status' => 'Success'
+            'status'      => 'Success',
+            'verified_at' => now(),
         ]);
 
         return redirect()->route('admin.angsuran.index')
