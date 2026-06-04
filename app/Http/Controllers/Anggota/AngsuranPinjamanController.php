@@ -60,6 +60,7 @@ class AngsuranPinjamanController extends Controller
             ->route('anggota.angsuran.create')
             ->with('success', 'Pembayaran angsuran berhasil diajukan. Menunggu verifikasi admin.');
     }
+
     public function show(AngsuranPinjaman $angsuran)
     {
         if ($angsuran->user_id !== auth()->id()) {
@@ -79,4 +80,45 @@ class AngsuranPinjamanController extends Controller
 
         return view('anggota.angsuran.show', compact('angsuran', 'sisaTenor', 'sisaTagihan'));
     }
+
+    public function history(Request $request)
+    {
+        $user       = auth()->user();
+        $filterStatus = $request->query('status', 'all');
+
+        $query = AngsuranPinjaman::with('pinjaman')
+            ->where('user_id', $user->id)
+            ->latest('tanggal_bayar');
+
+        if ($filterStatus !== 'all') {
+            $query->where('status', $filterStatus);
+        }
+
+        $histori = $query->get();
+
+        // Statistik
+        $totalPembayaran      = AngsuranPinjaman::where('user_id', $user->id)->count();
+        $totalTerverifikasi   = AngsuranPinjaman::where('user_id', $user->id)->where('status', 'Success')->count();
+        $totalPending         = AngsuranPinjaman::where('user_id', $user->id)->where('status', 'Pending')->count();
+        $totalNominal         = AngsuranPinjaman::where('user_id', $user->id)->where('status', 'Success')->sum('jumlah');
+
+        // Kelompokkan per pinjaman untuk progress bar (hanya dari data yang tidak difilter)
+        $pinjamanList = Pinjaman::where('user_id', $user->id)
+            ->where('status_pengajuan', 'Approved')
+            ->with(['angsuran' => function ($q) {
+                $q->latest('tanggal_bayar');
+            }])
+            ->get();
+
+        return view('anggota.angsuran.history', compact(
+            'histori',
+            'filterStatus',
+            'totalPembayaran',
+            'totalTerverifikasi',
+            'totalPending',
+            'totalNominal',
+            'pinjamanList',
+        ));
+    }
 }
+

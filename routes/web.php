@@ -39,6 +39,7 @@ Route::prefix('anggota')->name('anggota.')->middleware(['auth', 'role:anggota'])
     // Angsuran
     Route::get('/angsuran/baru',         [Anggota\AngsuranPinjamanController::class, 'create'])->name('angsuran.create');
     Route::post('/angsuran',             [Anggota\AngsuranPinjamanController::class, 'store'])->name('angsuran.store');
+    Route::get('/angsuran/history',      [Anggota\AngsuranPinjamanController::class, 'history'])->name('angsuran.history');
     Route::get('/angsuran/{angsuran}',   [Anggota\AngsuranPinjamanController::class, 'show'])->name('angsuran.show');
 
     // Tagihan

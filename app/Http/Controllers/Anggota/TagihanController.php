@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Anggota;
 use App\Http\Controllers\Controller;
 use App\Models\Pinjaman;
 use App\Models\Simpanan;
-use App\Models\AngsuranPinjaman;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -131,20 +130,13 @@ class TagihanController extends Controller
         // ─── Summary ─────────────────────────────────────────────────────
         $totalTagihan = $totalSimpananWajibTertunggak + $totalAngsuranTertunggak;
 
-        // ─── Riwayat Transaksi Angsuran ──────────────────────────────────
-        $riwayatAngsuran = AngsuranPinjaman::where('user_id', $user->id)
-            ->with('pinjaman')
-            ->latest('created_at')
-            ->get();
-
         return view('anggota.tagihan.index', compact(
             'simpananWajibSchedule',
             'totalSimpananWajibTertunggak',
             'angsuranTagihan',
             'totalAngsuranTertunggak',
             'totalTagihan',
-            'jumlahWajibPerBulan',
-            'riwayatAngsuran'
+            'jumlahWajibPerBulan'
         ));
     }
 }
