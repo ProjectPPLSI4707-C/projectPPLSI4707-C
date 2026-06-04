@@ -48,6 +48,11 @@ Route::prefix('anggota')->name('anggota.')->middleware(['auth', 'role:anggota'])
     Route::get('/profile',              [Anggota\ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile',              [Anggota\ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password',     [Anggota\ProfileController::class, 'updatePassword'])->name('profile.password');
+
+    // Alat
+    Route::get('/alat',                 [Anggota\AlatController::class, 'index'])->name('alat.index');
+    Route::get('/alat/{id}',            [Anggota\AlatController::class, 'show'])->name('alat.show');
+    Route::post('/alat/{id}/sewa',      [Anggota\AlatController::class, 'sewa'])->name('alat.sewa');
 });
 
 // ─── Admin ────────────────────────────────────────────────────────────────────
