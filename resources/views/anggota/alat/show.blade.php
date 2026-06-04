@@ -42,6 +42,16 @@
                 <div style="font-size: 18px; font-weight: 700; color: var(--gold);">Rp {{ number_format($alat->harga_sewa, 0, ',', '.') }} <span style="font-size: 12px; font-weight: 500; color: var(--gray-500);">/hari</span></div>
             </div>
         </div>
+        <div class="mt-4" style="padding-top:12px;">
+            @php $alatStatus = $alat->status ?? 'tersedia'; @endphp
+            @if($alatStatus === 'tersedia')
+                <span class="badge" style="background:#D1FAE5; color:#065F46;">✔ Tersedia untuk disewa</span>
+            @elseif($alatStatus === 'dipinjam')
+                <span class="badge badge-pending">🔄 Sedang Dipinjam</span>
+            @else
+                <span class="badge" style="background:#E5E7EB; color:#374151;">🔧 Sedang Maintenance</span>
+            @endif
+        </div>
 
         <div class="mt-6 pt-4" style="border-top: 1px solid var(--gray-200);">
             <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">Jadwal Terpesan (Tidak Tersedia)</h3>
@@ -65,7 +75,18 @@
     <!-- Form Sewa -->
     <div class="card">
         <div class="card-title">Formulir Penyewaan</div>
-        
+
+        @php $alatStatus = $alat->status ?? 'tersedia'; @endphp
+        @if($alatStatus === 'maintenance')
+        {{-- Blokir jika maintenance --}}
+        <div class="alert alert-warning" style="flex-direction:column; align-items:flex-start; gap:6px;">
+            <div style="font-weight:700; font-size:14px;">🔧 Alat Sedang Dalam Pemeliharaan</div>
+            <div style="font-size:13px;">Maaf, alat ini sedang dalam masa pemeliharaan dan tidak dapat disewa saat ini. Silakan coba lagi nanti atau pilih alat lain.</div>
+        </div>
+        <a href="{{ route('anggota.alat.index') }}" class="btn btn-outline w-full" style="justify-content:center; margin-top:8px;">
+            ← Lihat Alat Lainnya
+        </a>
+        @else
         <form action="{{ route('anggota.alat.sewa', $alat->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
 
@@ -106,6 +127,7 @@
                 Ajukan Penyewaan
             </button>
         </form>
+        @endif
     </div>
 </div>
 

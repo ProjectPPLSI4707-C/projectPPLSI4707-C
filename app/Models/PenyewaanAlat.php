@@ -14,6 +14,7 @@ class PenyewaanAlat extends Model
         'total_harga',
         'status_pembayaran',
         'bukti_pembayaran',
+        'tanggal_kembali',
     ];
 
     public function user()

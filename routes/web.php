@@ -76,4 +76,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/angsuran',                       [Admin\AngsuranPinjamanController::class, 'index'])->name('angsuran.index');
     Route::get('/angsuran/{angsuran}',            [Admin\AngsuranPinjamanController::class, 'show'])->name('angsuran.show');
     Route::patch('/angsuran/{angsuran}/verify',   [Admin\AngsuranPinjamanController::class, 'verify'])->name('angsuran.verify');
+
+    // Penyewaan Alat
+    Route::get('/alat',                           [Admin\PenyewaanAlatController::class, 'index'])->name('alat.index');
+    Route::get('/alat/{id}',                      [Admin\PenyewaanAlatController::class, 'show'])->name('alat.show');
+    Route::patch('/alat/{id}/approve',            [Admin\PenyewaanAlatController::class, 'approve'])->name('alat.approve');
+    Route::patch('/alat/{id}/reject',             [Admin\PenyewaanAlatController::class, 'reject'])->name('alat.reject');
+    Route::post('/alat/{id}/return',              [Admin\PenyewaanAlatController::class, 'returnAlat'])->name('alat.return');
+    Route::patch('/alat/{id}/status',             [Admin\PenyewaanAlatController::class, 'updateStatus'])->name('alat.status');
 });
