@@ -77,9 +77,14 @@
             <a href="{{ route('anggota.simpanan.index') }}" style="font-size:12px;color:#19376D;font-weight:500;text-decoration:none;">Lihat semua →</a>
         </div>
         @forelse($riwayatTerbaru as $item)
+            @php
+                $labelTransaksi = isset($item->jenis_simpanan)
+                    ? $item->jenis_simpanan
+                    : ('Angsuran Pinjaman #' . $item->pinjaman_id);
+            @endphp
             <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #F3F4F6;">
                 <div>
-                    <div style="font-size:13.5px;font-weight:600;color:#111827;">{{ $item->jenis_simpanan }}</div>
+                    <div style="font-size:13.5px;font-weight:600;color:#111827;">{{ $labelTransaksi }}</div>
                     <div style="font-size:12px;color:#6B7280;">{{ $item->created_at->format('d M Y') }}</div>
                 </div>
                 <div style="text-align:right;">

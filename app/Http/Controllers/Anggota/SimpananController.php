@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Anggota;
 use App\Http\Controllers\Controller;
 use App\Models\Simpanan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class SimpananController extends Controller
 {
@@ -14,12 +15,27 @@ class SimpananController extends Controller
         $user  = auth()->user();
         $jenis = $request->query('jenis');
 
-        $query = $user->simpanan()->latest();
-        if ($jenis) {
-            $query->where('jenis_simpanan', $jenis);
+        $simpananQuery = DB::table('simpanan')
+            ->where('user_id', $user->id)
+            ->when($jenis, function ($query, $jenis) {
+                $query->where('jenis_simpanan', $jenis);
+            })
+            ->selectRaw("'Simpanan' as tipe, jenis_simpanan as deskripsi, jumlah, bukti_bayar, status, created_at");
+
+        $union = $simpananQuery;
+        if (Schema::hasTable('angsuran_pinjaman')) {
+            $angsuranQuery = DB::table('angsuran_pinjaman')
+                ->where('user_id', $user->id)
+                ->selectRaw("'Angsuran' as tipe, CONCAT('Angsuran Pinjaman #', pinjaman_id) as deskripsi, jumlah, bukti_bayar, status, created_at");
+
+            $union = $simpananQuery->unionAll($angsuranQuery);
         }
 
-        $simpanan = $query->paginate(10);
+        $simpanan = DB::query()
+            ->fromSub($union, 'transaksi')
+            ->orderByDesc('created_at')
+            ->paginate(10)
+            ->withQueryString();
 
         $totalPokok    = $user->totalSimpananByJenis('Pokok');
         $totalWajib    = $user->totalSimpananByJenis('Wajib');

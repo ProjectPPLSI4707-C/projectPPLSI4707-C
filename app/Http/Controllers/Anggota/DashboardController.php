@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Anggota;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class DashboardController extends Controller
 {
@@ -19,7 +20,21 @@ class DashboardController extends Controller
         $pinjamanAktif  = $user->pinjaman()->where('status_pengajuan', 'Approved')->latest()->first();
         $pinjamanPending = $user->pinjaman()->where('status_pengajuan', 'Pending')->count();
 
-        $riwayatTerbaru = $user->simpanan()->latest()->take(5)->get();
+        $riwayatTerbaru = $user->simpanan()
+            ->latest()
+            ->take(5)
+            ->get();
+
+        if (Schema::hasTable('angsuran_pinjaman')) {
+            $riwayatTerbaru = $riwayatTerbaru->concat(
+                $user->angsuranPinjaman()->latest()->take(5)->get()
+            );
+        }
+
+        $riwayatTerbaru = $riwayatTerbaru
+            ->sortByDesc('created_at')
+            ->take(5)
+            ->values();
 
         return view('anggota.dashboard', compact(
             'user',
