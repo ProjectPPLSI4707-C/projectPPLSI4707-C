@@ -131,20 +131,13 @@ class TagihanController extends Controller
         // ─── Summary ─────────────────────────────────────────────────────
         $totalTagihan = $totalSimpananWajibTertunggak + $totalAngsuranTertunggak;
 
-        // ─── Riwayat Transaksi Angsuran ──────────────────────────────────
-        $riwayatAngsuran = AngsuranPinjaman::where('user_id', $user->id)
-            ->with('pinjaman')
-            ->latest('created_at')
-            ->get();
-
         return view('anggota.tagihan.index', compact(
             'simpananWajibSchedule',
             'totalSimpananWajibTertunggak',
             'angsuranTagihan',
             'totalAngsuranTertunggak',
             'totalTagihan',
-            'jumlahWajibPerBulan',
-            'riwayatAngsuran'
+            'jumlahWajibPerBulan'
         ));
     }
 }

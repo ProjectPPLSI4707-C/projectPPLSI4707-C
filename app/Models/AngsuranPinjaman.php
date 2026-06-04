@@ -15,13 +15,15 @@ class AngsuranPinjaman extends Model
         'tanggal_bayar',
         'bukti_bayar',
         'status',
+        'verified_at',
     ];
 
     protected function casts(): array
     {
         return [
-            'jumlah'       => 'float',
+            'jumlah'        => 'float',
             'tanggal_bayar' => 'date',
+            'verified_at'   => 'datetime',
         ];
     }
 

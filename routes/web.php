@@ -5,6 +5,7 @@ use App\Http\Controllers\Anggota;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\VerifikasiAngsuranController;
 
 // ─── Root redirect ────────────────────────────────────────────────────────────
 Route::get('/', function () {
@@ -47,6 +48,11 @@ Route::prefix('anggota')->name('anggota.')->middleware(['auth', 'role:anggota'])
     Route::get('/profile',              [Anggota\ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile',              [Anggota\ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password',     [Anggota\ProfileController::class, 'updatePassword'])->name('profile.password');
+
+    // Alat
+    Route::get('/alat',                 [Anggota\AlatController::class, 'index'])->name('alat.index');
+    Route::get('/alat/{id}',            [Anggota\AlatController::class, 'show'])->name('alat.show');
+    Route::post('/alat/{id}/sewa',      [Anggota\AlatController::class, 'sewa'])->name('alat.sewa');
 });
 
 // ─── Admin ────────────────────────────────────────────────────────────────────
@@ -65,4 +71,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/pinjaman/{pinjaman}',            [Admin\PinjamanController::class, 'show'])->name('pinjaman.show');
     Route::patch('/pinjaman/{pinjaman}/approve',  [Admin\PinjamanController::class, 'approve'])->name('pinjaman.approve');
     Route::patch('/pinjaman/{pinjaman}/reject',   [Admin\PinjamanController::class, 'reject'])->name('pinjaman.reject');
+
+    Route::get('/angsuran',                       [Admin\AngsuranPinjamanController::class, 'index'])->name('angsuran.index');
+    Route::get('/angsuran/{angsuran}',            [Admin\AngsuranPinjamanController::class, 'show'])->name('angsuran.show');
+    Route::patch('/angsuran/{angsuran}/verify',   [Admin\AngsuranPinjamanController::class, 'verify'])->name('angsuran.verify');
 });

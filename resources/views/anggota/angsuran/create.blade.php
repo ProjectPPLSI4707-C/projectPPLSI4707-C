@@ -62,11 +62,15 @@
                                    style="padding-left:40px;"
                                    value="{{ old('jumlah') }}"
                                    placeholder="0"
-                                   min="1000" step="1000">
+                                   min="1" step="any">
                         </div>
                         @error('jumlah')
                             <div class="invalid-feedback" style="display:block;">{{ $message }}</div>
                         @enderror
+                        <button type="button" id="btn-isi-otomatis" onclick="isiOtomatis()"
+                                style="margin-top:6px;font-size:12px;padding:4px 12px;background:none;border:1px solid #6366F1;color:#6366F1;border-radius:6px;cursor:pointer;display:none;">
+                            ⚡ Isi Otomatis sesuai Estimasi
+                        </button>
                     </div>
                 </div>
 
@@ -106,24 +110,41 @@
 
 @push('scripts')
 <script>
-    const selectPinjaman = document.getElementById('pinjaman_id');
-    const infoAngsuran   = document.getElementById('info-angsuran');
+    const selectPinjaman   = document.getElementById('pinjaman_id');
+    const infoAngsuran     = document.getElementById('info-angsuran');
+    const btnIsiOtomatis   = document.getElementById('btn-isi-otomatis');
+    const inputJumlah      = document.getElementById('jumlah');
 
     function formatRupiah(value) {
-        return new Intl.NumberFormat('id-ID', { maximumFractionDigits: 0 }).format(value);
+        return new Intl.NumberFormat('id-ID', { maximumFractionDigits: 2 }).format(value);
+    }
+
+    function getAngsuranValue() {
+        if (!selectPinjaman) return null;
+        const selected = selectPinjaman.options[selectPinjaman.selectedIndex];
+        return selected ? selected.getAttribute('data-angsuran') : null;
     }
 
     function updateInfo() {
         if (!selectPinjaman || !infoAngsuran) return;
-        const selected = selectPinjaman.options[selectPinjaman.selectedIndex];
-        const angsuran = selected ? selected.getAttribute('data-angsuran') : null;
+        const angsuran = getAngsuranValue();
 
         if (!angsuran) {
             infoAngsuran.textContent = '';
+            if (btnIsiOtomatis) btnIsiOtomatis.style.display = 'none';
             return;
         }
 
         infoAngsuran.textContent = 'Estimasi angsuran/bulan: Rp ' + formatRupiah(Number(angsuran));
+        if (btnIsiOtomatis) btnIsiOtomatis.style.display = 'inline-block';
+    }
+
+    function isiOtomatis() {
+        const angsuran = getAngsuranValue();
+        if (angsuran && inputJumlah) {
+            // Isi nilai persis dari estimasi, termasuk desimal (misal: 466666.67)
+            inputJumlah.value = Number(angsuran);
+        }
     }
 
     function previewFile(input) {
