@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Anggota;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class DashboardController extends Controller
 {
@@ -22,8 +23,15 @@ class DashboardController extends Controller
         $riwayatTerbaru = $user->simpanan()
             ->latest()
             ->take(5)
-            ->get()
-            ->concat($user->angsuranPinjaman()->latest()->take(5)->get())
+            ->get();
+
+        if (Schema::hasTable('angsuran_pinjaman')) {
+            $riwayatTerbaru = $riwayatTerbaru->concat(
+                $user->angsuranPinjaman()->latest()->take(5)->get()
+            );
+        }
+
+        $riwayatTerbaru = $riwayatTerbaru
             ->sortByDesc('created_at')
             ->take(5)
             ->values();

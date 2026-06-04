@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Simpanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Schema;
 
 class SimpananController extends Controller
 {
@@ -22,11 +22,14 @@ class SimpananController extends Controller
             })
             ->selectRaw("'Simpanan' as tipe, jenis_simpanan as deskripsi, jumlah, bukti_bayar, status, created_at");
 
-        $angsuranQuery = DB::table('angsuran_pinjaman')
-            ->where('user_id', $user->id)
-            ->selectRaw("'Angsuran' as tipe, CONCAT('Angsuran Pinjaman #', pinjaman_id) as deskripsi, jumlah, bukti_bayar, status, created_at");
+        $union = $simpananQuery;
+        if (Schema::hasTable('angsuran_pinjaman')) {
+            $angsuranQuery = DB::table('angsuran_pinjaman')
+                ->where('user_id', $user->id)
+                ->selectRaw("'Angsuran' as tipe, CONCAT('Angsuran Pinjaman #', pinjaman_id) as deskripsi, jumlah, bukti_bayar, status, created_at");
 
-        $union = $simpananQuery->unionAll($angsuranQuery);
+            $union = $simpananQuery->unionAll($angsuranQuery);
+        }
 
         $simpanan = DB::query()
             ->fromSub($union, 'transaksi')
