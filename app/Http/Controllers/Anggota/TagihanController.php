@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Anggota;
 use App\Http\Controllers\Controller;
 use App\Models\Pinjaman;
 use App\Models\Simpanan;
+use App\Models\AngsuranPinjaman;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 

@@ -60,7 +60,6 @@ class AngsuranPinjamanController extends Controller
             ->route('anggota.angsuran.create')
             ->with('success', 'Pembayaran angsuran berhasil diajukan. Menunggu verifikasi admin.');
     }
-
     public function show(AngsuranPinjaman $angsuran)
     {
         if ($angsuran->user_id !== auth()->id()) {
