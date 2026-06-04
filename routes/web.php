@@ -7,10 +7,10 @@ use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\VerifikasiAngsuranController;
 
-// ─── Root redirect ────────────────────────────────────────────────────────────
+// ─── Landing Page ─────────────────────────────────────────────────────────────
 Route::get('/', function () {
-    return redirect()->route('login');
-});
+    return view('landing');
+})->name('landing');
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 Route::get('/login',  [LoginController::class, 'showLoginForm'])->name('login');
