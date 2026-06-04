@@ -43,8 +43,12 @@ class AlatController extends Controller
         ]);
 
         $alat = Alat::findOrFail($id);
-        
-        // Validasi ketersediaan jadwal
+
+        // Cek jika alat sedang dalam maintenance
+        if ($alat->status === 'maintenance') {
+            return back()->with('error', 'Alat ini sedang dalam masa pemeliharaan dan tidak dapat disewa saat ini.');
+        }
+
         $bentrok = PenyewaanAlat::where('alat_id', $id)
             ->whereIn('status_pembayaran', ['pending', 'dibayar'])
             ->where(function($query) use ($request) {
