@@ -5,6 +5,11 @@
     Dashboard
 </a>
 
+<a href="{{ route('anggota.alat.index') }}" class="nav-item {{ request()->routeIs('anggota.alat.*') ? 'active' : '' }}">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+    Katalog Alat
+</a>
+
 <div class="nav-section-label">Simpanan</div>
 
 <a href="{{ route('anggota.simpanan.index') }}" class="nav-item {{ request()->routeIs('anggota.simpanan.index') ? 'active' : '' }}">
@@ -34,6 +39,11 @@
     Ajukan Pinjaman
 </a>
 
+<a href="{{ route('anggota.angsuran.history') }}" class="nav-item {{ request()->routeIs('anggota.angsuran.history') || request()->routeIs('anggota.angsuran.show') ? 'active' : '' }}">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+    Riwayat Angsuran
+</a>
+
 <div class="nav-section-label">Tagihan</div>
 
 <a href="{{ route('anggota.tagihan.index') }}" class="nav-item {{ request()->routeIs('anggota.tagihan.*') ? 'active' : '' }}">
@@ -47,4 +57,3 @@
     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
     Edit Profil
 </a>
-

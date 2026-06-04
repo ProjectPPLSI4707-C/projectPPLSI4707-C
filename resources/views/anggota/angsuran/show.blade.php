@@ -4,9 +4,9 @@
 
 @section('content')
 <div class="page-header">
-    <a href="{{ route('anggota.tagihan.index') }}" style="color:var(--gray-500);text-decoration:none;font-size:14px;display:inline-flex;align-items:center;margin-bottom:12px;">
+    <a href="{{ route('anggota.angsuran.history') }}" style="color:var(--gray-500);text-decoration:none;font-size:14px;display:inline-flex;align-items:center;margin-bottom:12px;">
         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right:4px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-        Kembali ke Tagihan
+        Kembali ke Histori
     </a>
     <h2>🧾 E-Invoice Pembayaran Angsuran</h2>
     <p>Detail informasi pembayaran angsuran pinjaman Anda</p>
@@ -56,6 +56,12 @@
             <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Waktu Dicatat</div>
             <div style="font-weight: 600; color: var(--gray-800);">{{ $angsuran->created_at->locale('id')->isoFormat('D MMMM Y, HH:mm') }}</div>
         </div>
+        @if($angsuran->status === 'Success' && $angsuran->verified_at)
+        <div>
+            <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 4px;">Diverifikasi Pada</div>
+            <div style="font-weight: 600; color: #059669;">{{ $angsuran->verified_at->locale('id')->isoFormat('D MMMM Y, HH:mm') }}</div>
+        </div>
+        @endif
     </div>
 
     @if($angsuran->bukti_bayar)

@@ -235,58 +235,6 @@
     </div>
 @endforelse
 
-{{-- ── Riwayat Pembayaran Angsuran ── --}}
-<div class="card" style="margin-bottom:24px;">
-    <div class="card-title">
-        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right:6px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        Riwayat Pembayaran Angsuran
-    </div>
-
-    <div class="table-wrap">
-        <table>
-            <thead>
-                <tr>
-                    <th>Tanggal Bayar</th>
-                    <th>ID Pinjaman</th>
-                    <th>Jumlah</th>
-                    <th>Status</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($riwayatAngsuran as $riwayat)
-                    <tr>
-                        <td style="color:var(--gray-700);">{{ \Carbon\Carbon::parse($riwayat->tanggal_bayar)->locale('id')->isoFormat('D MMM Y') }}</td>
-                        <td style="font-weight:600;color:var(--gray-700);">#PINJ-{{ str_pad($riwayat->pinjaman_id, 4, '0', STR_PAD_LEFT) }}</td>
-                        <td style="font-family:'Poppins',sans-serif;font-weight:600;color:var(--navy);">
-                            Rp {{ number_format($riwayat->jumlah, 0, ',', '.') }}
-                        </td>
-                        <td>
-                            @if($riwayat->status === 'Success')
-                                <span class="badge badge-success">Success</span>
-                            @elseif($riwayat->status === 'Pending')
-                                <span class="badge badge-pending">Pending</span>
-                            @else
-                                <span class="badge badge-rejected">{{ $riwayat->status }}</span>
-                            @endif
-                        </td>
-                        <td>
-                            <a href="{{ route('anggota.angsuran.show', $riwayat->id) }}" class="btn btn-outline btn-sm" style="display:inline-flex;align-items:center;">
-                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right:4px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                E-Invoice
-                            </a>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="5" style="text-align:center;color:var(--gray-500);padding:24px 0;">Belum ada riwayat pembayaran angsuran.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-</div>
-
 @endsection
 
 @push('styles')
