@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\VerifikasiAngsuranController;
+use App\Http\Controllers\Admin\InventarisAlatController;
 
 // ─── Landing Page ─────────────────────────────────────────────────────────────
 Route::get('/', function () {
@@ -84,4 +85,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::patch('/alat/{id}/reject',             [Admin\PenyewaanAlatController::class, 'reject'])->name('alat.reject');
     Route::post('/alat/{id}/return',              [Admin\PenyewaanAlatController::class, 'returnAlat'])->name('alat.return');
     Route::patch('/alat/{id}/status',             [Admin\PenyewaanAlatController::class, 'updateStatus'])->name('alat.status');
+
+    // Inventaris Alat
+    Route::resource('inventaris-alat', InventarisAlatController::class);
 });
