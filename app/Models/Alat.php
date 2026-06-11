@@ -12,6 +12,7 @@ class Alat extends Model
 
     protected $fillable = [
         'nama_alat',
+        'jenis',
         'deskripsi',
         'harga_sewa',
         'stok',
