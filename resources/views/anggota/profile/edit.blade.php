@@ -88,11 +88,11 @@
         font-size: 22px;
         font-weight: 700;
         margin-bottom: 4px;
-        color: #fff;
+        color: var(--gray-900);
     }
     .profile-header-info .email {
         font-size: 13px;
-        color: rgba(255,255,255,.65);
+        color: var(--gray-500);
         margin-bottom: 8px;
     }
     .profile-role-badge {
@@ -120,7 +120,7 @@
 
     /* ── Section Cards ── */
     .profile-section {
-        background: #fff;
+        background: var(--surface);
         border-radius: 16px;
         border: 1px solid var(--gray-200);
         margin-bottom: 24px;

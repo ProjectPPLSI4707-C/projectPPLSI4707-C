@@ -163,9 +163,7 @@
             font-weight: 700;
             color: var(--gray-900);
             letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            display: inline-block;
         }
         .sidebar-brand h1 span { color: var(--gold); }
         .sidebar-brand p {

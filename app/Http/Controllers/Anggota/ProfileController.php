@@ -12,6 +12,16 @@ use Illuminate\Validation\Rule;
 class ProfileController extends Controller
 {
     /**
+     * Show the user's profile detail.
+     */
+    public function show()
+    {
+        $user = auth()->user();
+
+        return view('anggota.profile.show', compact('user'));
+    }
+
+    /**
      * Show the profile edit form.
      */
     public function edit()
