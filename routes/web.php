@@ -56,6 +56,7 @@ Route::prefix('anggota')->name('anggota.')->middleware(['auth', 'role:anggota'])
     Route::get('/tagihan',              [Anggota\TagihanController::class, 'index'])->name('tagihan.index');
 
     // Profile
+    Route::get('/profile/show',         [Anggota\ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile',              [Anggota\ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile/photo',        [Anggota\ProfileController::class, 'photo'])->name('profile.photo');
     Route::put('/profile',              [Anggota\ProfileController::class, 'update'])->name('profile.update');
