@@ -1276,19 +1276,19 @@
                     <div class="mini-stat-grid">
                         <div class="mini-stat">
                             <div class="label">Total Simpanan</div>
-                            <div class="value gold">Rp 15.2 Jt</div>
+                            <div class="value gold">{{ 'Rp ' . number_format($totalSimpanan, 0, ',', '.') }}</div>
                         </div>
                         <div class="mini-stat">
-                            <div class="label">Pinjaman Aktif</div>
-                            <div class="value emerald">Rp 8.5 Jt</div>
+                            <div class="label">Pinjaman Tersalurkan</div>
+                            <div class="value emerald">{{ 'Rp ' . number_format($totalPinjaman, 0, ',', '.') }}</div>
                         </div>
                         <div class="mini-stat">
-                            <div class="label">Angsuran Lunas</div>
-                            <div class="value">12</div>
+                            <div class="label">Anggota Terdaftar</div>
+                            <div class="value">{{ number_format($totalAnggota, 0, ',', '.') }}</div>
                         </div>
                         <div class="mini-stat">
-                            <div class="label">Sisa Tenor</div>
-                            <div class="value">6 bln</div>
+                            <div class="label">Keberhasilan</div>
+                            <div class="value">{{ $tingkatKeberhasilan }}%</div>
                         </div>
                     </div>
                     <div class="floating-chart-bar">
@@ -1326,24 +1326,53 @@
 <!-- ═══════════════════════════════════════════════════════════════════
      TRUST STATS BAND
      ═══════════════════════════════════════════════════════════════════ -->
+@php
+    // Format simpanan for display
+    $simpananFormatted = $totalSimpanan;
+    $simpananSuffix = '';
+    if ($totalSimpanan >= 1000000000) {
+        $simpananFormatted = round($totalSimpanan / 1000000000, 1);
+        $simpananSuffix = 'M';
+    } elseif ($totalSimpanan >= 1000000) {
+        $simpananFormatted = round($totalSimpanan / 1000000, 1);
+        $simpananSuffix = 'Jt';
+    } elseif ($totalSimpanan >= 1000) {
+        $simpananFormatted = round($totalSimpanan / 1000, 1);
+        $simpananSuffix = 'Rb';
+    }
+
+    // Format pinjaman for display
+    $pinjamanFormatted = $totalPinjaman;
+    $pinjamanSuffix = '';
+    if ($totalPinjaman >= 1000000000) {
+        $pinjamanFormatted = round($totalPinjaman / 1000000000, 1);
+        $pinjamanSuffix = 'M';
+    } elseif ($totalPinjaman >= 1000000) {
+        $pinjamanFormatted = round($totalPinjaman / 1000000, 1);
+        $pinjamanSuffix = 'Jt';
+    } elseif ($totalPinjaman >= 1000) {
+        $pinjamanFormatted = round($totalPinjaman / 1000, 1);
+        $pinjamanSuffix = 'Rb';
+    }
+@endphp
 <section class="trust-band">
     <div class="container">
         <div class="trust-grid">
             <div class="trust-item fade-in-up">
-                <div class="trust-number"><span class="counter" data-target="500">0</span><span class="accent">+</span></div>
+                <div class="trust-number"><span class="counter" data-target="{{ $totalAnggota }}">0</span><span class="accent">+</span></div>
                 <div class="trust-label">Anggota Terdaftar</div>
             </div>
             <div class="trust-item fade-in-up">
-                <div class="trust-number">Rp <span class="counter" data-target="2" data-suffix="M">0</span></div>
+                <div class="trust-number">Rp <span class="counter" data-target="{{ intval($simpananFormatted) }}" data-suffix="{{ $simpananSuffix }}">0</span></div>
                 <div class="trust-label">Total Simpanan Dikelola</div>
             </div>
             <div class="trust-item fade-in-up">
-                <div class="trust-number">Rp <span class="counter" data-target="850" data-suffix="Jt">0</span></div>
+                <div class="trust-number">Rp <span class="counter" data-target="{{ intval($pinjamanFormatted) }}" data-suffix="{{ $pinjamanSuffix }}">0</span></div>
                 <div class="trust-label">Pinjaman Tersalurkan</div>
             </div>
             <div class="trust-item fade-in-up">
-                <div class="trust-number"><span class="counter" data-target="98">0</span><span class="accent">%</span></div>
-                <div class="trust-label">Tingkat Kepuasan</div>
+                <div class="trust-number"><span class="counter" data-target="{{ $tingkatKeberhasilan }}">0</span><span class="accent">%</span></div>
+                <div class="trust-label">Tingkat Keberhasilan Angsuran</div>
             </div>
         </div>
     </div>
