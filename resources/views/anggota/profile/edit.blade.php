@@ -3,8 +3,15 @@
 @section('title', 'Edit Profil')
 @section('page-title', 'Pengaturan Profil')
 @php
-    $hasProfilePhoto = filled($user->profile_photo) && Storage::disk('public')->exists($user->profile_photo);
-    $profilePhotoUrl = $hasProfilePhoto ? route('anggota.profile.photo', ['v' => md5($user->profile_photo)]) : null;
+    $storedInPublicUploads = filled($user->profile_photo) && str_starts_with($user->profile_photo, 'uploads/');
+    $hasProfilePhoto = $storedInPublicUploads
+        ? file_exists(public_path($user->profile_photo))
+        : (filled($user->profile_photo) && Storage::disk('public')->exists($user->profile_photo));
+    $profilePhotoUrl = $hasProfilePhoto
+        ? ($storedInPublicUploads
+            ? asset($user->profile_photo) . '?v=' . md5($user->profile_photo)
+            : route('anggota.profile.photo', ['v' => md5($user->profile_photo)]))
+        : null;
 @endphp
 
 @push('styles')
