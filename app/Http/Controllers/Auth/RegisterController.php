@@ -15,7 +15,7 @@ class RegisterController extends Controller
         if (Auth::check()) {
             return $this->redirectByRole();
         }
-        return view('Auth.registration');
+        return view('auth.registration');
     }
 
     public function register(Request $request)

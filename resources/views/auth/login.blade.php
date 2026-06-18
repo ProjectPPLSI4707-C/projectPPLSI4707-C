@@ -353,14 +353,6 @@
                 Belum terdaftar? <a href="{{ route('register') }}">Buat Akun Anggota</a>
             </div>
 
-            <div class="demo-box">
-                <div class="demo-title">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14" height="14"><path stroke-linecap="round" stroke-linejoin="round" d="M15 7a2 2 0 012 2m-2 4a5 5 0 110-10 5 5 0 010 10zM19 13l-2.5-2.5m0 0L14 13m2.5-2.5h-5.5"/></svg>
-                    Kredensial Demo
-                </div>
-                <div class="demo-item">👨‍💼 Admin: admin@skoter.id / password</div>
-                <div class="demo-item">👤 Anggota: budi@skoter.id / password</div>
-            </div>
         </div>
     </div>
 </div>
