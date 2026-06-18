@@ -48,6 +48,7 @@ Route::prefix('anggota')->name('anggota.')->middleware(['auth', 'role:anggota'])
 
     // Profile
     Route::get('/profile',              [Anggota\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/photo',        [Anggota\ProfileController::class, 'photo'])->name('profile.photo');
     Route::put('/profile',              [Anggota\ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password',     [Anggota\ProfileController::class, 'updatePassword'])->name('profile.password');
 
