@@ -20,6 +20,10 @@ class DashboardController extends Controller
         $recentSimpanan = Simpanan::with('user')->pending()->latest()->take(5)->get();
         $recentPinjaman = Pinjaman::with('user')->pending()->latest()->take(5)->get();
 
+        // SHU
+        $shuTahunIni = \App\Models\ShuSetting::where('tahun', now()->year)->first();
+        $totalShuTahunIni = $shuTahunIni?->total_shu ?? 0;
+
         return view('admin.dashboard', compact(
             'totalAnggota',
             'totalSimpananAll',
@@ -27,7 +31,8 @@ class DashboardController extends Controller
             'pendingPinjaman',
             'totalPinjamanAktif',
             'recentSimpanan',
-            'recentPinjaman'
+            'recentPinjaman',
+            'totalShuTahunIni'
         ));
     }
 }

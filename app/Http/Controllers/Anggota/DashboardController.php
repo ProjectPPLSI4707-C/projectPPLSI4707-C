@@ -36,6 +36,12 @@ class DashboardController extends Controller
             ->take(5)
             ->values();
 
+        // SHU
+        $shuTerbaru = \App\Models\ShuDistribution::where('user_id', $user->id)
+            ->where('status', 'distributed')
+            ->orderByDesc('tahun')
+            ->first();
+
         return view('anggota.dashboard', compact(
             'user',
             'totalSimpanan',
@@ -44,7 +50,8 @@ class DashboardController extends Controller
             'simpananSukarela',
             'pinjamanAktif',
             'pinjamanPending',
-            'riwayatTerbaru'
+            'riwayatTerbaru',
+            'shuTerbaru'
         ));
     }
 }
