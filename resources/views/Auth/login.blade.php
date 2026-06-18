@@ -183,21 +183,6 @@
         .demo-box p { font-size: 11.5px; color: #1E40AF; font-weight: 600; margin-bottom: 6px; }
         .demo-box .demo-item { font-size: 12px; color: #3B82F6; margin-bottom: 3px; }
 
-        .register-link {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 13px;
-            color: #6B7280;
-        }
-        .register-link a {
-            color: #19376D;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-
         @media(max-width: 768px) {
             .login-left { display: none; }
             .login-right { width: 100%; }
@@ -273,10 +258,6 @@
                 </div>
                 <button type="submit" class="btn-login">Masuk</button>
             </form>
-
-            <div class="register-link">
-                Belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a>
-            </div>
 
             <div class="demo-box">
                 <p>🔑 Akun Demo</p>
