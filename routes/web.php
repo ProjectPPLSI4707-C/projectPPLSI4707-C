@@ -66,6 +66,9 @@ Route::prefix('anggota')->name('anggota.')->middleware(['auth', 'role:anggota'])
     Route::get('/alat',                 [Anggota\AlatController::class, 'index'])->name('alat.index');
     Route::get('/alat/{id}',            [Anggota\AlatController::class, 'show'])->name('alat.show');
     Route::post('/alat/{id}/sewa',      [Anggota\AlatController::class, 'sewa'])->name('alat.sewa');
+
+    // SHU Saya
+    Route::get('/shu',                  [Anggota\ShuController::class, 'index'])->name('shu.index');
 });
 
 // ─── Admin ────────────────────────────────────────────────────────────────────
@@ -105,4 +108,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/anggota/{user}/edit',  [Admin\AnggotaController::class, 'edit'])->name('anggota.edit');
     Route::put('/anggota/{user}',       [Admin\AnggotaController::class, 'update'])->name('anggota.update');
     Route::delete('/anggota/{user}',    [Admin\AnggotaController::class, 'destroy'])->name('anggota.destroy');
+
+    // SHU
+    Route::get('/shu',                           [Admin\ShuController::class, 'index'])->name('shu.index');
+    Route::get('/shu/create',                    [Admin\ShuController::class, 'create'])->name('shu.create');
+    Route::post('/shu',                          [Admin\ShuController::class, 'store'])->name('shu.store');
+    Route::get('/shu/{shuSetting}',              [Admin\ShuController::class, 'show'])->name('shu.show');
+    Route::post('/shu/{shuSetting}/generate',    [Admin\ShuController::class, 'generate'])->name('shu.generate');
+    Route::patch('/shu/{shuSetting}/approve',    [Admin\ShuController::class, 'approve'])->name('shu.approve');
+    Route::patch('/shu/{shuSetting}/distribute', [Admin\ShuController::class, 'distribute'])->name('shu.distribute');
+    Route::get('/shu/{shuSetting}/export',       [Admin\ShuController::class, 'export'])->name('shu.export');
 });

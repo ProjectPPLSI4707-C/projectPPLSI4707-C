@@ -432,6 +432,9 @@
         .badge-success  { background: var(--emerald-light); color: var(--emerald); border: 1px solid rgba(16,185,129,.25); }
         .badge-approved { background: var(--emerald-light); color: var(--emerald); border: 1px solid rgba(16,185,129,.25); }
         .badge-rejected { background: var(--red-light); color: var(--red); border: 1px solid rgba(239,68,68,.25); }
+        .badge-draft       { background: var(--blue-light); color: var(--navy-light); border: 1px solid rgba(59,130,246,.25); }
+        .badge-distributed { background: var(--emerald-light); color: var(--emerald); border: 1px solid rgba(16,185,129,.25); }
+        .stat-icon.purple   { background: rgba(139,92,246,.12); color: #8B5CF6; }
 
         /* ══════════════════════════════════════════════════
            TABLE

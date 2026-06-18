@@ -107,5 +107,39 @@ class DatabaseSeeder extends Seeder
             'tanggal_pengajuan'=> now()->toDateString(),
             'catatan_admin'    => null,
         ]);
+
+        // ─── SHU Setting & Distribution ───────────────────────────────────────────
+        $shuSetting = \App\Models\ShuSetting::create([
+            'tahun'              => 2025,
+            'total_shu'          => 60000000,
+            'persen_cadangan'    => 40,
+            'persen_jasa_modal'  => 30,
+            'persen_jasa_usaha'  => 30,
+            'generated_at'       => now(),
+        ]);
+
+        \App\Models\ShuDistribution::create([
+            'user_id'                 => $anggota1->id,
+            'tahun'                   => 2025,
+            'total_simpanan_anggota'  => 850000,
+            'total_transaksi_anggota' => 5000000,
+            'jasa_modal'              => 11647059,
+            'jasa_usaha'              => 11250000,
+            'total_shu'               => 22897059,
+            'status'                  => 'distributed',
+            'distributed_at'          => now(),
+        ]);
+
+        \App\Models\ShuDistribution::create([
+            'user_id'                 => $anggota2->id,
+            'tahun'                   => 2025,
+            'total_simpanan_anggota'  => 500000,
+            'total_transaksi_anggota' => 3000000,
+            'jasa_modal'              => 6352941,
+            'jasa_usaha'              => 6750000,
+            'total_shu'               => 13102941,
+            'status'                  => 'distributed',
+            'distributed_at'          => now(),
+        ]);
     }
 }

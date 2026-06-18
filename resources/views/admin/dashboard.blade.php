@@ -65,6 +65,15 @@
             <div class="stat-value sm">Rp {{ number_format($totalPinjamanAktif, 0, ',', '.') }}</div>
         </div>
     </div>
+    <div class="stat-card">
+        <div class="stat-icon purple">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
+        </div>
+        <div>
+            <div class="stat-label">SHU Tahun Berjalan</div>
+            <div class="stat-value sm">Rp {{ number_format($totalShuTahunIni, 0, ',', '.') }}</div>
+        </div>
+    </div>
 </div>
 
 <div class="grid-2">
