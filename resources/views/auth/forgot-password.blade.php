@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Masuk — SKOTER</title>
+    <title>Verifikasi Akun — SKOTER</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -116,7 +116,7 @@
             border: 1px solid rgba(245, 166, 35, 0.1);
         }
 
-        /* Right side - Login Form Panel */
+        /* Right side - Form Panel */
         .login-right {
             width: 500px;
             background: #070E1A;
@@ -172,23 +172,6 @@
         .form-control::placeholder {
             color: #475569;
         }
-        .form-control.is-invalid { border-color: #EF4444; }
-        .invalid-feedback { font-size: 12px; color: #EF4444; margin-top: 4px; display: block; }
-
-        .password-wrapper { position: relative; }
-        .password-toggle {
-            position: absolute; right: 14px; top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            background: none; border: none;
-            color: #64748B;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .password-toggle:hover {
-            color: #fff;
-        }
 
         .btn-login {
             width: 100%;
@@ -209,35 +192,6 @@
             box-shadow: 0 6px 20px rgba(245,166,35,.35);
             transform: translateY(-1px);
         }
-        .btn-login:active {
-            transform: translateY(0);
-        }
-
-        .demo-box {
-            margin-top: 28px;
-            background: rgba(30, 58, 138, 0.2);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 12px;
-            padding: 16px;
-        }
-        .demo-box .demo-title { 
-            font-size: 12px; 
-            color: #3B82F6; 
-            font-weight: 700; 
-            margin-bottom: 8px; 
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .demo-box .demo-item { 
-            font-size: 12.5px; 
-            color: #93C5FD; 
-            margin-bottom: 4px;
-            font-family: monospace;
-        }
-        .demo-box .demo-item:last-child { margin-bottom: 0; }
 
         .register-link {
             text-align: center;
@@ -296,8 +250,8 @@
     {{-- Right Section --}}
     <div class="login-right">
         <div class="login-card">
-            <h2>Selamat Datang</h2>
-            <p class="subtitle">Masuk menggunakan akun SKOTER Anda</p>
+            <h2>Verifikasi Akun</h2>
+            <p class="subtitle">Masukkan Email dan Nomor HP yang terdaftar untuk melanjutkan</p>
 
             @if($errors->any())
                 <div style="background:#3A1C1C;border-left:4px solid #EF4444;border-radius:8px;padding:14px;margin-bottom:20px;font-size:13.5px;color:#FF453A;font-weight:600;">
@@ -305,7 +259,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('login.post') }}" id="login-form">
+            <form method="POST" action="{{ route('password.verify.post') }}">
                 @csrf
                 <div class="form-group">
                     <label class="form-label" for="email">Alamat Email</label>
@@ -313,73 +267,34 @@
                         type="email"
                         id="email"
                         name="email"
-                        class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                        class="form-control"
                         value="{{ old('email') }}"
                         placeholder="contoh@email.com"
-                        autocomplete="email"
                         required
                     >
                 </div>
+                
                 <div class="form-group">
-                    {{-- 👇 INI ADALAH BAGIAN YANG DITAMBAHKAN 👇 --}}
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <label class="form-label" for="password" style="margin-bottom: 0;">Kata Sandi</label>
-                        @if($errors->any())
-                            <a href="{{ route('password.verify') }}" style="font-size: 12px; color: #F5A623; text-decoration: none; font-weight: 600;">Lupa Kata Sandi?</a>
-                        @endif
-                    </div>
-                    {{-- 👆 BATAS BAGIAN YANG DITAMBAHKAN 👆 --}}
-                    
-                    <div class="password-wrapper">
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            class="form-control"
-                            placeholder="••••••••"
-                            autocomplete="current-password"
-                            required
-                        >
-                        <button type="button" class="password-toggle" onclick="togglePassword()" id="toggle-btn">
-                            <svg id="eye-open" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                            <svg id="eye-closed" style="display:none;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M3 3l18 18"/></svg>
-                        </button>
-                    </div>
+                    <label class="form-label" for="phone">Nomor Handphone</label>
+                    <input
+                        type="text"
+                        id="phone"
+                        name="phone"
+                        class="form-control"
+                        value="{{ old('phone') }}"
+                        placeholder="0812xxxxxx"
+                        required
+                    >
                 </div>
-                <button type="submit" class="btn-login">Masuk</button>
+                
+                <button type="submit" class="btn-login">Verifikasi Data</button>
             </form>
 
             <div class="register-link">
-                Belum terdaftar? <a href="{{ route('register') }}">Buat Akun Anggota</a>
-            </div>
-
-            <div class="demo-box">
-                <div class="demo-title">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14" height="14"><path stroke-linecap="round" stroke-linejoin="round" d="M15 7a2 2 0 012 2m-2 4a5 5 0 110-10 5 5 0 010 10zM19 13l-2.5-2.5m0 0L14 13m2.5-2.5h-5.5"/></svg>
-                    Kredensial Demo
-                </div>
-                <div class="demo-item">👨‍💼 Admin: admin@skoter.id / password</div>
-                <div class="demo-item">👤 Anggota: budi@skoter.id / password</div>
+                <a href="{{ route('login') }}">← Kembali ke Halaman Masuk</a>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-function togglePassword() {
-    const pw  = document.getElementById('password');
-    const eyeOpen = document.getElementById('eye-open');
-    const eyeClosed = document.getElementById('eye-closed');
-    if (pw.type === 'password') { 
-        pw.type = 'text'; 
-        eyeOpen.style.display = 'none'; 
-        eyeClosed.style.display = 'block'; 
-    } else { 
-        pw.type = 'password'; 
-        eyeOpen.style.display = 'block'; 
-        eyeClosed.style.display = 'none'; 
-    }
-}
-</script>
 </body>
 </html>
