@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
@@ -47,13 +48,18 @@ class ProfileController extends Controller
 
         // Handle profile photo upload
         if ($request->hasFile('profile_photo')) {
+            $file = $request->file('profile_photo');
+
             // Delete old photo if exists
-            if ($user->profile_photo) {
+            if ($user->profile_photo && Storage::disk('public')->exists($user->profile_photo)) {
                 Storage::disk('public')->delete($user->profile_photo);
             }
 
-            $validated['profile_photo'] = $request->file('profile_photo')
-                ->store('profile_photos', 'public');
+            // Store file with unique name to avoid caching issues
+            $ext      = $file->getClientOriginalExtension();
+            $newName  = $user->id . '_' . time() . '.' . $ext;
+            $file->storeAs('profile_photos', $newName, 'public');
+            $validated['profile_photo'] = 'profile_photos/' . $newName;
         }
 
         $user->update($validated);
