@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@use('Illuminate\Support\Facades\Storage')
 @section('title', 'Edit Profil')
 @section('page-title', 'Pengaturan Profil')
 
@@ -76,6 +77,7 @@
         font-size: 22px;
         font-weight: 700;
         margin-bottom: 4px;
+        color: #fff;
     }
     .profile-header-info .email {
         font-size: 13px;
@@ -92,6 +94,17 @@
         font-weight: 600;
         color: var(--gold);
         text-transform: capitalize;
+    }
+
+    /* ── Light Mode Overrides ── */
+    body.light-mode .profile-header {
+        background: linear-gradient(135deg, #0B2545 0%, #19376D 50%, #1a4a8a 100%);
+    }
+    body.light-mode .profile-header-info h2 {
+        color: #FFFFFF;
+    }
+    body.light-mode .profile-header-info .email {
+        color: rgba(255,255,255,.75);
     }
 
     /* ── Section Cards ── */
@@ -246,7 +259,7 @@
         <div class="profile-avatar-wrapper">
             <div class="profile-avatar">
                 @if($user->profile_photo)
-                    <img src="{{ asset('storage/' . $user->profile_photo) }}" alt="{{ $user->name }}">
+                    <img src="{{ Storage::url($user->profile_photo) }}" alt="{{ $user->name }}">
                 @else
                     {{ strtoupper(substr($user->name, 0, 1)) }}
                 @endif
@@ -281,7 +294,7 @@
                     <div class="photo-upload-area" id="photoDropZone">
                         <div class="photo-upload-preview" id="photoPreview">
                             @if($user->profile_photo)
-                                <img src="{{ asset('storage/' . $user->profile_photo) }}" alt="Foto Profil" id="previewImage">
+                                <img src="{{ Storage::url($user->profile_photo) }}" alt="Foto Profil" id="previewImage">
                             @else
                                 <div class="placeholder" id="previewPlaceholder">📷</div>
                                 <img src="" alt="Foto Profil" id="previewImage" style="display:none;">
