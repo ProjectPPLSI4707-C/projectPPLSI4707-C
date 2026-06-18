@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="SKOTER — Sistem Koperasi Terpadu. Platform manajemen koperasi digital yang mudah, aman, dan transparan untuk seluruh anggota.">
