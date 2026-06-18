@@ -5,17 +5,18 @@
 @push('styles')
 <style>
     .simulator-card {
-        background: linear-gradient(135deg, #0B2545 0%, #19376D 60%, #1A4A8A 100%);
-        border-radius: 16px;
+        background: #fff;
+        border: 1px solid var(--gray-200);
+        border-radius: 8px;
         padding: 28px;
-        color: #fff;
+        color: var(--gray-900);
         position: sticky;
         top: 80px;
     }
     .simulator-title {
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Inter', sans-serif;
         font-size: 16px;
-        font-weight: 700;
+        font-weight: 600;
         margin-bottom: 20px;
         display: flex;
         align-items: center;
@@ -25,27 +26,27 @@
     .sim-label {
         font-size: 12px;
         font-weight: 500;
-        color: rgba(255,255,255,.7);
+        color: var(--gray-500);
         margin-bottom: 6px;
         display: block;
     }
     .sim-input {
         width: 100%;
         padding: 10px 14px;
-        background: rgba(255,255,255,.12);
-        border: 1.5px solid rgba(255,255,255,.2);
-        border-radius: 10px;
-        color: #fff;
+        background: #fff;
+        border: 1.5px solid var(--gray-300);
+        border-radius: 8px;
+        color: var(--gray-900);
         font-size: 14px;
         font-family: 'Inter', sans-serif;
         outline: none;
         transition: border-color .2s;
     }
-    .sim-input:focus { border-color: rgba(245,166,35,.7); }
-    .sim-input::placeholder { color: rgba(255,255,255,.4); }
+    .sim-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,112,209,.10); }
+    .sim-input::placeholder { color: var(--gray-400); }
     .sim-result {
-        background: rgba(255,255,255,.1);
-        border-radius: 12px;
+        background: var(--gray-50);
+        border-radius: 8px;
         padding: 18px;
         margin-top: 6px;
     }
@@ -54,22 +55,22 @@
         justify-content: space-between;
         align-items: center;
         padding: 7px 0;
-        border-bottom: 1px solid rgba(255,255,255,.08);
+        border-bottom: 1px solid var(--gray-200);
         font-size: 13px;
     }
     .sim-result-row:last-child { border-bottom: none; }
-    .sim-result-label { color: rgba(255,255,255,.7); }
-    .sim-result-value { font-weight: 700; color: #fff; font-family: 'Poppins', sans-serif; }
-    .sim-result-value.gold { color: #F5A623; font-size: 18px; }
+    .sim-result-label { color: var(--gray-500); }
+    .sim-result-value { font-weight: 600; color: var(--gray-900); font-family: 'Inter', sans-serif; }
+    .sim-result-value.gold { color: var(--primary); font-size: 18px; }
     .sim-note {
         font-size: 11px;
-        color: rgba(255,255,255,.45);
+        color: var(--gray-500);
         margin-top: 12px;
         line-height: 1.6;
     }
-    .sim-loading { text-align: center; padding: 20px; color: rgba(255,255,255,.5); font-size: 13px; }
-    .range-input { width: 100%; accent-color: #F5A623; margin-top: 8px; }
-    .range-labels { display: flex; justify-content: space-between; font-size: 11px; color: rgba(255,255,255,.5); margin-top: 4px; }
+    .sim-loading { text-align: center; padding: 20px; color: var(--gray-500); font-size: 13px; }
+    .range-input { width: 100%; accent-color: var(--primary); margin-top: 8px; }
+    .range-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--gray-500); margin-top: 4px; }
 </style>
 @endpush
 
@@ -79,14 +80,14 @@
         <h2>Ajukan Pinjaman</h2>
         <p>Simulasikan terlebih dahulu, lalu isi form pengajuan</p>
     </div>
-    <a href="{{ route('anggota.pinjaman.index') }}" class="btn btn-outline">← Kembali</a>
+    <a href="{{ route('anggota.pinjaman.index') }}" class="btn btn-outline">Kembali</a>
 </div>
 
 <div style="display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:start;">
 
     {{-- Form Pengajuan --}}
     <div class="card">
-        <div class="card-title">📝 Form Pengajuan Pinjaman</div>
+        <div class="card-title">Form Pengajuan Pinjaman</div>
 
         <form method="POST" action="{{ route('anggota.pinjaman.store') }}" enctype="multipart/form-data" id="pinjaman-form">
             @csrf
@@ -137,13 +138,13 @@
                     <input type="file" id="dokumen_pendukung" name="dokumen_pendukung"
                            accept=".jpg,.jpeg,.png,.pdf" onchange="previewDokumen(this)">
                     <div id="dok-placeholder">
-                        <div class="icon">📁</div>
+                        <div class="icon">+</div>
                         <label class="upload-label">Klik untuk unggah dokumen</label>
                         <p>KTP, slip gaji, atau dokumen pendukung lainnya · Maks. 5 MB</p>
                     </div>
                     <div id="dok-preview" style="display:none;">
-                        <div style="font-size:28px;">✅</div>
-                        <p id="dok-name" style="font-weight:600;color:#059669;font-size:13px;margin-top:6px;"></p>
+                        <div style="font-size:28px;color:var(--primary);">OK</div>
+                        <p id="dok-name" style="font-weight:600;color:var(--primary);font-size:13px;margin-top:6px;"></p>
                     </div>
                 </div>
                 @error('dokumen_pendukung')
@@ -152,20 +153,20 @@
             </div>
 
             {{-- Info bunga --}}
-            <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:14px 16px;margin-bottom:20px;">
-                <div style="font-size:13px;color:#1E40AF;font-weight:600;margin-bottom:4px;">ℹ️ Informasi Bunga</div>
-                <div style="font-size:12.5px;color:#3B82F6;">Bunga flat <strong>1% per bulan</strong> dari pokok pinjaman. Total angsuran = (Pokok ÷ Tenor) + (Pokok × 1%).</div>
+            <div style="background:var(--blue-light);border:1px solid rgba(0,112,209,.18);border-radius:8px;padding:16px;margin-bottom:24px;">
+                <div style="font-size:13px;color:var(--primary);font-weight:600;margin-bottom:4px;">Informasi Bunga</div>
+                <div style="font-size:13px;color:var(--gray-700);">Bunga flat <strong>1% per bulan</strong> dari pokok pinjaman. Total angsuran = (Pokok ÷ Tenor) + (Pokok × 1%).</div>
             </div>
 
             <button type="submit" class="btn btn-primary w-full" style="justify-content:center;padding:13px;">
-                🚀 Ajukan Pinjaman
+                Ajukan Pinjaman
             </button>
         </form>
     </div>
 
     {{-- Simulator Widget --}}
     <div class="simulator-card">
-        <div class="simulator-title">🧮 Simulasi Angsuran</div>
+        <div class="simulator-title">Simulasi Angsuran</div>
 
         <div class="sim-input-group">
             <label class="sim-label">Jumlah Pinjaman</label>
@@ -197,10 +198,9 @@
         <p class="sim-note">* Simulasi menggunakan bunga flat 1%/bulan. Nilai aktual dapat berbeda berdasarkan kebijakan koperasi.</p>
 
         <button type="button" id="pakai-simulasi"
-                style="width:100%;margin-top:16px;padding:11px;border-radius:10px;background:rgba(245,166,35,.25);border:1.5px solid rgba(245,166,35,.5);color:#F5A623;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;"
-                onmouseover="this.style.background='rgba(245,166,35,.4)'"
-                onmouseout="this.style.background='rgba(245,166,35,.25)'">
-            ✅ Gunakan Angka Ini di Form
+                class="btn btn-outline w-full"
+                style="margin-top:16px;">
+            Gunakan Angka Ini di Form
         </button>
     </div>
 </div>
