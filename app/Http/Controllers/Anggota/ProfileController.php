@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
@@ -29,6 +30,18 @@ class ProfileController extends Controller
 
         if (! $user || ! $user->profile_photo) {
             abort(404);
+        }
+
+        if (Str::startsWith($user->profile_photo, 'uploads/')) {
+            $publicPath = public_path($user->profile_photo);
+
+            if (! file_exists($publicPath)) {
+                abort(404);
+            }
+
+            return response()->file($publicPath, [
+                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+            ]);
         }
 
         $disk = Storage::disk('public');
@@ -72,15 +85,29 @@ class ProfileController extends Controller
             $file = $request->file('profile_photo');
 
             // Delete old photo if exists
-            if ($user->profile_photo && Storage::disk('public')->exists($user->profile_photo)) {
-                Storage::disk('public')->delete($user->profile_photo);
+            if ($user->profile_photo) {
+                if (Str::startsWith($user->profile_photo, 'uploads/')) {
+                    $oldPublicPath = public_path($user->profile_photo);
+
+                    if (file_exists($oldPublicPath)) {
+                        @unlink($oldPublicPath);
+                    }
+                } elseif (Storage::disk('public')->exists($user->profile_photo)) {
+                    Storage::disk('public')->delete($user->profile_photo);
+                }
             }
 
-            // Store file with unique name to avoid caching issues
+            // Store in public/uploads so the image stays directly web-accessible on hosting.
             $ext      = $file->getClientOriginalExtension();
             $newName  = $user->id . '_' . time() . '.' . $ext;
-            $file->storeAs('profile_photos', $newName, 'public');
-            $validated['profile_photo'] = 'profile_photos/' . $newName;
+            $targetDir = public_path('uploads/profile_photos');
+
+            if (! is_dir($targetDir)) {
+                mkdir($targetDir, 0755, true);
+            }
+
+            $file->move($targetDir, $newName);
+            $validated['profile_photo'] = 'uploads/profile_photos/' . $newName;
         }
 
         $user->update($validated);
