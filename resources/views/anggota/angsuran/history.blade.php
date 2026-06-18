@@ -5,7 +5,7 @@
 @section('content')
 <div class="page-header" style="margin-bottom: 24px;">
     <div>
-        <h2>📜 Riwayat Angsuran</h2>
+        <h2>Riwayat Angsuran</h2>
         <p>Pantau seluruh riwayat pembayaran angsuran dan status verifikasinya</p>
     </div>
     <a href="{{ route('anggota.angsuran.create') }}" class="btn btn-primary">
@@ -115,10 +115,10 @@
 <div class="card" style="padding:14px 20px;margin-bottom:16px;">
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
         <span style="font-size:13px;font-weight:600;color:var(--gray-700);">Filter Status:</span>
-        @foreach(['all' => '📋 Semua', 'Pending' => '⏳ Pending', 'Success' => '✅ Success'] as $val => $label)
+        @foreach(['all' => 'Semua', 'Pending' => 'Pending', 'Success' => 'Success'] as $val => $label)
             <a href="{{ route('anggota.angsuran.history', ['status' => $val]) }}"
-               style="padding:6px 18px;border-radius:20px;font-size:13px;font-weight:500;text-decoration:none;transition:all .15s;
-                      {{ $filterStatus === $val ? 'background:var(--navy);color:#fff;' : 'background:var(--gray-100);color:var(--gray-700);' }}">
+               style="padding:5px 14px;border-radius:20px;font-size:13px;font-weight:500;text-decoration:none;transition:all .15s;
+                      {{ $filterStatus === $val ? 'background:var(--navy-light);color:#fff;' : 'background:var(--gray-100);color:var(--gray-600);border:1px solid var(--gray-200);' }}">
                 {{ $label }}
             </a>
         @endforeach
@@ -207,8 +207,8 @@
                 @empty
                     <tr>
                         <td colspan="7" style="text-align:center;padding:56px 0;color:var(--gray-400);">
-                            <div style="font-size:40px;margin-bottom:10px;">📭</div>
-                            <div style="font-weight:500;margin-bottom:4px;">Belum ada riwayat pembayaran angsuran</div>
+                            <svg style="margin:0 auto 12px;color:var(--gray-400);" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
+                            <div style="font-weight:600;font-size:14px;color:var(--gray-700);margin-bottom:4px;">Belum ada riwayat pembayaran angsuran</div>
                             <div style="font-size:12px;">
                                 @if($filterStatus !== 'all')
                                     Tidak ada data dengan filter "{{ $filterStatus }}".
@@ -273,10 +273,10 @@
 
     /* ── Row Highlight ── */
     .hist-row-pending td {
-        background: #FFFBEB;
+        background: rgba(245, 166, 35, 0.06);
     }
     .hist-row-pending:hover td {
-        background: #FEF3C7 !important;
+        background: rgba(245, 166, 35, 0.10) !important;
     }
 
     /* ── Badge Pulse ── */

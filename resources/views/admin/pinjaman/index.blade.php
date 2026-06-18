@@ -11,20 +11,35 @@
 </div>
 
 {{-- Stats --}}
-<div class="stat-grid" style="grid-template-columns:repeat(3,1fr);max-width:600px;margin-bottom:20px;">
-    <div class="stat-card"><div class="stat-icon gold">⏳</div><div><div class="stat-label">Pending</div><div class="stat-value">{{ $pendingCount }}</div></div></div>
-    <div class="stat-card"><div class="stat-icon green">✅</div><div><div class="stat-label">Disetujui</div><div class="stat-value">{{ $approvedCount }}</div></div></div>
-    <div class="stat-card"><div class="stat-icon red">❌</div><div><div class="stat-label">Ditolak</div><div class="stat-value">{{ $rejectedCount }}</div></div></div>
+<div class="stat-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));max-width:560px;margin-bottom:20px;">
+    <div class="stat-card">
+        <div class="stat-icon gold">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="stat-info"><div class="stat-label">Pending</div><div class="stat-value">{{ $pendingCount }}</div></div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon green">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="stat-info"><div class="stat-label">Disetujui</div><div class="stat-value">{{ $approvedCount }}</div></div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon red">
+            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="stat-info"><div class="stat-label">Ditolak</div><div class="stat-value">{{ $rejectedCount }}</div></div>
+    </div>
 </div>
 
 {{-- Filter --}}
-<div class="card" style="margin-bottom:20px;padding:16px 20px;">
-    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
-        <span style="font-size:13px;font-weight:500;color:#374151;">Filter:</span>
-        @foreach(['Pending' => '⏳ Pending', 'Approved' => '✅ Disetujui', 'Rejected' => '❌ Ditolak', 'all' => '📋 Semua'] as $val => $label)
-            <a href="{{ route('admin.pinjaman.index', ['status' => $val]) }}"
-               style="padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;text-decoration:none;transition:all .15s;
-                      {{ $status === $val ? 'background:#19376D;color:#fff;' : 'background:#F3F4F6;color:#374151;' }}">
+<div class="card" style="margin-bottom:16px;padding:14px 18px;">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <span style="font-size:13px;font-weight:500;color:var(--gray-500);">Filter:</span>
+        @foreach(['Pending'=>'Pending','Approved'=>'Disetujui','Rejected'=>'Ditolak','all'=>'Semua'] as $val=>$label)
+            <a href="{{ route('admin.pinjaman.index',['status'=>$val]) }}"
+               style="padding:5px 14px;border-radius:20px;font-size:13px;font-weight:500;text-decoration:none;transition:all .15s;
+                      {{ $status===$val ? 'background:var(--navy-light);color:#fff;' : 'background:var(--gray-100);color:var(--gray-600);border:1px solid var(--gray-200);' }}">
                 {{ $label }}
             </a>
         @endforeach
@@ -51,24 +66,24 @@
             <tbody>
                 @forelse($pinjaman as $i => $p)
                     <tr>
-                        <td style="color:#9CA3AF;">{{ $pinjaman->firstItem() + $i }}</td>
+                        <td style="color:var(--gray-500);">{{ $pinjaman->firstItem() + $i }}</td>
                         <td>
-                            <div style="font-weight:600;color:#111827;">{{ $p->user->name }}</div>
-                            <div style="font-size:12px;color:#6B7280;">{{ $p->user->email }}</div>
+                            <div style="font-weight:600;color:var(--gray-900);">{{ $p->user->name }}</div>
+                            <div style="font-size:12px;color:var(--gray-500);">{{ $p->user->email }}</div>
                         </td>
-                        <td style="font-weight:700;color:#19376D;font-family:'Poppins',sans-serif;">
-                            Rp {{ number_format($p->jumlah_pinjaman, 0, ',', '.') }}
+                        <td style="font-weight:700;color:var(--navy-light);font-family:'JetBrains Mono',monospace;">
+                            Rp {{ number_format($p->jumlah_pinjaman,0,',','.') }}
                         </td>
-                        <td>{{ $p->tenor }} bln</td>
-                        <td style="font-weight:600;color:#059669;">
-                            Rp {{ number_format($p->angsuranPerBulan(), 0, ',', '.') }}
+                        <td style="color:var(--gray-700);">{{ $p->tenor }} bln</td>
+                        <td style="font-weight:600;color:var(--emerald);font-family:'JetBrains Mono',monospace;">
+                            Rp {{ number_format($p->angsuranPerBulan(),0,',','.') }}
                         </td>
                         <td style="max-width:160px;">
                             <span style="font-size:12.5px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="{{ $p->tujuan_pinjaman }}">
                                 {{ $p->tujuan_pinjaman }}
                             </span>
                         </td>
-                        <td style="color:#6B7280;font-size:12.5px;">{{ $p->tanggal_pengajuan->format('d M Y') }}</td>
+                        <td style="color:var(--gray-500);font-size:12.5px;">{{ $p->tanggal_pengajuan->format('d M Y') }}</td>
                         <td>
                             @php
                                 $bc = match($p->status_pengajuan) {
@@ -80,16 +95,16 @@
                             <span class="badge {{ $bc }}">{{ $p->status_pengajuan }}</span>
                         </td>
                         <td>
-                            <a href="{{ route('admin.pinjaman.show', $p) }}" class="btn btn-sm {{ $p->isPending() ? 'btn-gold' : 'btn-outline' }}">
+                            <a href="{{ route('admin.pinjaman.show',$p) }}" class="btn btn-sm {{ $p->isPending() ? 'btn-gold' : 'btn-outline' }}">
                                 {{ $p->isPending() ? 'Putuskan' : 'Detail' }}
                             </a>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="9" style="text-align:center;padding:48px;color:#9CA3AF;">
-                            <div style="font-size:36px;margin-bottom:8px;">📭</div>
-                            Tidak ada data pengajuan pinjaman.
+                        <td colspan="9" style="text-align:center;padding:48px;color:var(--gray-500);">
+                            <svg style="margin:0 auto 12px;color:var(--gray-400);" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
+                            <div style="font-size:14px;font-weight:600;color:var(--gray-700);">Tidak ada data pengajuan pinjaman.</div>
                         </td>
                     </tr>
                 @endforelse
