@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="page-header">
-    <h2>📋 Informasi Tagihan</h2>
+    <h2>Informasi Tagihan</h2>
     <p>Pantau tagihan simpanan wajib dan angsuran pinjaman Anda</p>
 </div>
 
@@ -74,7 +74,7 @@
                 @foreach($simpananWajibSchedule as $sw)
                     <tr>
                         <td style="font-weight:600;">{{ $sw['bulan'] }}</td>
-                        <td style="font-family:'Poppins',sans-serif;font-weight:600;color:var(--navy);">
+                        <td style="font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--navy-light);">
                             Rp {{ number_format($sw['jumlah'], 0, ',', '.') }}
                         </td>
                         <td>
@@ -150,7 +150,7 @@
         <div style="margin-bottom:20px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
                 <span style="font-size:12px;font-weight:600;color:var(--gray-700);">Progres Pembayaran</span>
-                <span style="font-size:12px;font-weight:700;color:var(--navy);">{{ $at['progress'] }}%</span>
+                <span style="font-size:12px;font-weight:700;color:var(--navy-light);">{{ $at['progress'] }}%</span>
             </div>
             <div class="progress-bar-track">
                 <div class="progress-bar-fill" style="width:{{ $at['progress'] }}%"></div>
@@ -179,7 +179,7 @@
                                 <span class="angsuran-num">{{ $jadwal['ke'] }}</span>
                             </td>
                             <td style="color:var(--gray-700);">{{ $jadwal['jatuh_tempo'] }}</td>
-                            <td style="font-family:'Poppins',sans-serif;font-weight:600;color:var(--navy);">
+                            <td style="font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--navy-light);">
                                 Rp {{ number_format($jadwal['jumlah'], 0, ',', '.') }}
                             </td>
                             <td>
@@ -228,7 +228,7 @@
             Angsuran Pinjaman
         </div>
         <div style="text-align:center;padding:40px 16px;color:var(--gray-500);">
-            <div style="font-size:48px;margin-bottom:12px;">💳</div>
+            <svg style="margin:0 auto 14px;color:var(--gray-400);" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
             <p style="font-size:14px;font-weight:500;margin-bottom:4px;">Tidak ada pinjaman aktif</p>
             <p style="font-size:12.5px;color:var(--gray-400);">Anda belum memiliki pinjaman yang disetujui saat ini.</p>
         </div>
@@ -265,7 +265,7 @@
         font-weight: 700;
         color: var(--gray-900);
     }
-    .tagihan-info-value.navy    { color: var(--navy); }
+    .tagihan-info-value.navy    { color: var(--navy-light); }
     .tagihan-info-value.emerald { color: var(--emerald); }
     .tagihan-info-value.red     { color: var(--red); }
 
