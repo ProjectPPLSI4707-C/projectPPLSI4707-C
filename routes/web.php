@@ -20,6 +20,15 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register',  [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
 
+// 👇 INI ADALAH BAGIAN LUPA PASSWORD YANG DITAMBAHKAN 👇
+Route::get('/lupa-password', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'showVerifyForm'])->name('password.verify');
+Route::post('/lupa-password', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'verify'])->name('password.verify.post');
+
+Route::get('/reset-password', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'reset'])->name('password.reset.post');
+// 👆 BATAS BAGIAN LUPA PASSWORD 👆
+
+
 // ─── Anggota ──────────────────────────────────────────────────────────────────
 Route::prefix('anggota')->name('anggota.')->middleware(['auth', 'role:anggota'])->group(function () {
 
