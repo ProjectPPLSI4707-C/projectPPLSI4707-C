@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
@@ -19,6 +18,28 @@ class ProfileController extends Controller
         $user = auth()->user();
 
         return view('anggota.profile.edit', compact('user'));
+    }
+
+    /**
+     * Stream the authenticated user's profile photo from storage.
+     */
+    public function photo()
+    {
+        $user = auth()->user();
+
+        if (! $user || ! $user->profile_photo) {
+            abort(404);
+        }
+
+        $disk = Storage::disk('public');
+
+        if (! $disk->exists($user->profile_photo)) {
+            abort(404);
+        }
+
+        return response()->file($disk->path($user->profile_photo), [
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+        ]);
     }
 
     /**

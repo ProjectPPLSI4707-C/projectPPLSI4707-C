@@ -2,6 +2,10 @@
 @use('Illuminate\Support\Facades\Storage')
 @section('title', 'Edit Profil')
 @section('page-title', 'Pengaturan Profil')
+@php
+    $hasProfilePhoto = filled($user->profile_photo) && Storage::disk('public')->exists($user->profile_photo);
+    $profilePhotoUrl = $hasProfilePhoto ? route('anggota.profile.photo', ['v' => md5($user->profile_photo)]) : null;
+@endphp
 
 @push('styles')
 <style>
@@ -258,8 +262,8 @@
     <div class="profile-header">
         <div class="profile-avatar-wrapper">
             <div class="profile-avatar">
-                @if($user->profile_photo)
-                    <img src="{{ Storage::url($user->profile_photo) }}" alt="{{ $user->name }}">
+                @if($hasProfilePhoto)
+                    <img src="{{ $profilePhotoUrl }}" alt="{{ $user->name }}">
                 @else
                     {{ strtoupper(substr($user->name, 0, 1)) }}
                 @endif
@@ -293,8 +297,8 @@
                     <label class="form-label">Foto Profil</label>
                     <div class="photo-upload-area" id="photoDropZone">
                         <div class="photo-upload-preview" id="photoPreview">
-                            @if($user->profile_photo)
-                                <img src="{{ Storage::url($user->profile_photo) }}" alt="Foto Profil" id="previewImage">
+                            @if($hasProfilePhoto)
+                                <img src="{{ $profilePhotoUrl }}" alt="Foto Profil" id="previewImage">
                             @else
                                 <div class="placeholder" id="previewPlaceholder">📷</div>
                                 <img src="" alt="Foto Profil" id="previewImage" style="display:none;">
