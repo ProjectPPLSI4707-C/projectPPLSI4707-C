@@ -89,4 +89,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
 
     // Inventaris Alat
     Route::resource('inventaris-alat', InventarisAlatController::class);
+
+    // Manajemen Anggota
+    Route::get('/anggota',              [Admin\AnggotaController::class, 'index'])->name('anggota.index');
+    Route::get('/anggota/{user}/edit',  [Admin\AnggotaController::class, 'edit'])->name('anggota.edit');
+    Route::put('/anggota/{user}',       [Admin\AnggotaController::class, 'update'])->name('anggota.update');
+    Route::delete('/anggota/{user}',    [Admin\AnggotaController::class, 'destroy'])->name('anggota.destroy');
 });
