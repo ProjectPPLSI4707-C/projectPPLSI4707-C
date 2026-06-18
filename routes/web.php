@@ -9,9 +9,7 @@ use App\Http\Controllers\Admin\VerifikasiAngsuranController;
 use App\Http\Controllers\Admin\InventarisAlatController;
 
 // ─── Landing Page ─────────────────────────────────────────────────────────────
-Route::get('/', function () {
-    return view('landing');
-})->name('landing');
+Route::get('/', [\App\Http\Controllers\LandingController::class, 'index'])->name('landing');
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 Route::get('/login',  [LoginController::class, 'showLoginForm'])->name('login');
