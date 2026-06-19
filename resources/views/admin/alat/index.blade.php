@@ -104,7 +104,7 @@
                     </td>
                     <td>
                         @if($p->bukti_pembayaran)
-                            <a href="{{ asset('storage/'.$p->bukti_pembayaran) }}" target="_blank"
+                            <a href="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($p->bukti_pembayaran) }}" target="_blank"
                                style="display:inline-flex;align-items:center;gap:5px;font-size:12px;
                                       color:var(--navy-light);font-weight:600;text-decoration:none;
                                       background:var(--blue-light);padding:5px 10px;border-radius:8px;">

@@ -10,7 +10,7 @@
     $profilePhotoUrl = $hasProfilePhoto
         ? ($storedInPublicUploads
             ? asset($user->profile_photo) . '?v=' . md5($user->profile_photo)
-            : route('anggota.profile.photo', ['v' => md5($user->profile_photo)]))
+            : \Illuminate\Support\Facades\Storage::disk('public')->url($user->profile_photo) . '?v=' . md5($user->profile_photo))
         : null;
 @endphp
 

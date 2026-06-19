@@ -94,6 +94,6 @@ class Pinjaman extends Model
 
     public function getDokumenUrlAttribute(): ?string
     {
-        return $this->dokumen_pendukung ? asset('storage/' . $this->dokumen_pendukung) : null;
+        return $this->dokumen_pendukung ? \Illuminate\Support\Facades\Storage::disk('public')->url($this->dokumen_pendukung) : null;
     }
 }

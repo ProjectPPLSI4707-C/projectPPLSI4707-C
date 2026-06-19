@@ -35,7 +35,7 @@
                         <td style="color:var(--gray-500);">{{ $alats->firstItem() + $i }}</td>
                         <td>
                             @if($alat->gambar)
-                                <img src="{{ asset('storage/'.$alat->gambar) }}" alt="{{ $alat->nama_alat }}"
+                                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($alat->gambar) }}" alt="{{ $alat->nama_alat }}"
                                      style="width:48px;height:48px;object-fit:cover;border-radius:8px;">
                             @else
                                 <div style="width:48px;height:48px;background:var(--gray-100);border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--gray-200);">
