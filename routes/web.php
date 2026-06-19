@@ -116,4 +116,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::patch('/shu/{shuSetting}/approve',    [Admin\ShuController::class, 'approve'])->name('shu.approve');
     Route::patch('/shu/{shuSetting}/distribute', [Admin\ShuController::class, 'distribute'])->name('shu.distribute');
     Route::get('/shu/{shuSetting}/export',       [Admin\ShuController::class, 'export'])->name('shu.export');
+
+    // Profile
+    Route::get('/profile/show',     [Admin\ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile',          [Admin\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/photo',    [Admin\ProfileController::class, 'photo'])->name('profile.photo');
+    Route::put('/profile',          [Admin\ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [Admin\ProfileController::class, 'updatePassword'])->name('profile.password');
 });

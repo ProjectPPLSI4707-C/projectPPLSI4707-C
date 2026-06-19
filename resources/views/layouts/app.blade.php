@@ -809,11 +809,30 @@
         <p>Sistem Koperasi Terpadu</p>
     </div>
 
+    @php
+        $sidebarUser = auth()->user();
+        $sidebarHasPhoto = filled($sidebarUser->profile_photo);
+        if ($sidebarHasPhoto) {
+            if (str_starts_with($sidebarUser->profile_photo, 'uploads/')) {
+                $sidebarPhotoUrl = asset($sidebarUser->profile_photo);
+            } else {
+                $routeName = $sidebarUser->isAdmin() ? 'admin.profile.photo' : 'anggota.profile.photo';
+                $sidebarPhotoUrl = route($routeName);
+            }
+        }
+    @endphp
+
     <div class="sidebar-user">
-        <div class="avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
+        <div class="avatar">
+            @if($sidebarHasPhoto)
+                <img src="{{ $sidebarPhotoUrl }}" alt="{{ $sidebarUser->name }}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+            @else
+                {{ strtoupper(substr($sidebarUser->name, 0, 1)) }}
+            @endif
+        </div>
         <div class="user-info">
-            <div class="name">{{ auth()->user()->name }}</div>
-            <div class="role">{{ ucfirst(auth()->user()->role) }}</div>
+            <div class="name">{{ $sidebarUser->name }}</div>
+            <div class="role">{{ ucfirst($sidebarUser->role) }}</div>
         </div>
     </div>
 
