@@ -39,6 +39,6 @@ class AngsuranPinjaman extends Model
 
     public function getBuktiUrlAttribute(): ?string
     {
-        return $this->bukti_bayar ? asset('storage/' . $this->bukti_bayar) : null;
+        return $this->bukti_bayar ? asset($this->bukti_bayar) : null;
     }
 }

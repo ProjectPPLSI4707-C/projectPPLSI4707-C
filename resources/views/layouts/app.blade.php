@@ -813,12 +813,7 @@
         $sidebarUser = auth()->user();
         $sidebarHasPhoto = filled($sidebarUser->profile_photo);
         if ($sidebarHasPhoto) {
-            if (str_starts_with($sidebarUser->profile_photo, 'uploads/')) {
-                $sidebarPhotoUrl = asset($sidebarUser->profile_photo);
-            } else {
-                $routeName = $sidebarUser->isAdmin() ? 'admin.profile.photo' : 'anggota.profile.photo';
-                $sidebarPhotoUrl = route($routeName);
-            }
+            $sidebarPhotoUrl = asset($sidebarUser->profile_photo);
         }
     @endphp
 

@@ -41,8 +41,13 @@ class InventarisAlatController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            $path = $request->file('gambar')->store('alat_gambar', 'public');
-            $validated['gambar'] = $path;
+            $file = $request->file('gambar');
+            $ext = $file->getClientOriginalExtension();
+            $newName = time() . '_' . uniqid() . '.' . $ext;
+            $targetDir = public_path('uploads/alat_gambar');
+            if (! is_dir($targetDir)) mkdir($targetDir, 0755, true);
+            $file->move($targetDir, $newName);
+            $validated['gambar'] = 'uploads/alat_gambar/' . $newName;
         }
 
         Alat::create($validated);
@@ -74,10 +79,16 @@ class InventarisAlatController extends Controller
 
         if ($request->hasFile('gambar')) {
             if ($inventaris_alat->gambar) {
-                Storage::disk('public')->delete($inventaris_alat->gambar);
+                $oldPath = public_path($inventaris_alat->gambar);
+                if (file_exists($oldPath)) @unlink($oldPath);
             }
-            $path = $request->file('gambar')->store('alat_gambar', 'public');
-            $validated['gambar'] = $path;
+            $file = $request->file('gambar');
+            $ext = $file->getClientOriginalExtension();
+            $newName = time() . '_' . uniqid() . '.' . $ext;
+            $targetDir = public_path('uploads/alat_gambar');
+            if (! is_dir($targetDir)) mkdir($targetDir, 0755, true);
+            $file->move($targetDir, $newName);
+            $validated['gambar'] = 'uploads/alat_gambar/' . $newName;
         }
 
         $inventaris_alat->update($validated);
@@ -91,7 +102,8 @@ class InventarisAlatController extends Controller
     public function destroy(Alat $inventaris_alat)
     {
         if ($inventaris_alat->gambar) {
-            Storage::disk('public')->delete($inventaris_alat->gambar);
+            $oldPath = public_path($inventaris_alat->gambar);
+            if (file_exists($oldPath)) @unlink($oldPath);
         }
         $inventaris_alat->delete();
 

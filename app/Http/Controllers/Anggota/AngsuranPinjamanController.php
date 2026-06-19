@@ -45,7 +45,13 @@ class AngsuranPinjamanController extends Controller
             ->approved()
             ->firstOrFail();
 
-        $path = $request->file('bukti_bayar')->store('bukti_bayar_angsuran', 'public');
+        $file = $request->file('bukti_bayar');
+        $ext = $file->getClientOriginalExtension();
+        $newName = time() . '_' . uniqid() . '.' . $ext;
+        $targetDir = public_path('uploads/bukti_bayar_angsuran');
+        if (! is_dir($targetDir)) mkdir($targetDir, 0755, true);
+        $file->move($targetDir, $newName);
+        $path = 'uploads/bukti_bayar_angsuran/' . $newName;
 
         AngsuranPinjaman::create([
             'pinjaman_id'   => $pinjaman->id,

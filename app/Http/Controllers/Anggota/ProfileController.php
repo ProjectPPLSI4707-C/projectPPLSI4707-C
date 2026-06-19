@@ -107,7 +107,6 @@ class ProfileController extends Controller
                 }
             }
 
-            // Store in public/uploads so the image stays directly web-accessible on hosting.
             $ext      = $file->getClientOriginalExtension();
             $newName  = $user->id . '_' . time() . '.' . $ext;
             $targetDir = public_path('uploads/profile_photos');

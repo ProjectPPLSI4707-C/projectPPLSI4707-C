@@ -67,7 +67,13 @@ class SimpananController extends Controller
             'bukti_bayar.max'         => 'Ukuran file maksimal 2 MB.',
         ]);
 
-        $path = $request->file('bukti_bayar')->store('bukti_bayar', 'public');
+        $file = $request->file('bukti_bayar');
+        $ext = $file->getClientOriginalExtension();
+        $newName = time() . '_' . uniqid() . '.' . $ext;
+        $targetDir = public_path('uploads/bukti_bayar_simpanan');
+        if (! is_dir($targetDir)) mkdir($targetDir, 0755, true);
+        $file->move($targetDir, $newName);
+        $path = 'uploads/bukti_bayar_simpanan/' . $newName;
 
         Simpanan::create([
             'user_id'        => auth()->id(),

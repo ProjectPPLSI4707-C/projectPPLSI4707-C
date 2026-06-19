@@ -40,7 +40,13 @@ class PinjamanController extends Controller
 
         $dokumenPath = null;
         if ($request->hasFile('dokumen_pendukung')) {
-            $dokumenPath = $request->file('dokumen_pendukung')->store('dokumen_pinjaman', 'public');
+            $file = $request->file('dokumen_pendukung');
+            $ext = $file->getClientOriginalExtension();
+            $newName = time() . '_' . uniqid() . '.' . $ext;
+            $targetDir = public_path('uploads/dokumen_pinjaman');
+            if (! is_dir($targetDir)) mkdir($targetDir, 0755, true);
+            $file->move($targetDir, $newName);
+            $dokumenPath = 'uploads/dokumen_pinjaman/' . $newName;
         }
 
         Pinjaman::create([
