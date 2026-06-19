@@ -113,11 +113,18 @@
             <div class="form-group">
                 <label class="form-label">Bukti Pembayaran <span class="req">*</span></label>
                 <p style="font-size: 12px; color: var(--gray-500); margin-bottom: 12px;">Silakan transfer sejumlah <strong style="color:var(--gray-900);">Total Biaya</strong> ke rekening koperasi (BCA 123456789 a/n SKOTER) dan unggah bukti transfer.</p>
-                <label class="upload-area w-full" style="display: block;">
-                    <div class="icon">📄</div>
-                    <div class="upload-label mt-2">Pilih file / Drag & drop</div>
-                    <p>Format JPG, PNG (Max. 2MB)</p>
-                    <input type="file" name="bukti_pembayaran" required accept="image/*">
+                <label class="upload-area w-full" style="display: block;" id="upload-area">
+                    <div id="upload-placeholder">
+                        <div class="icon">📄</div>
+                        <div class="upload-label mt-2">Pilih file / Drag & drop</div>
+                        <p>Format JPG, PNG (Max. 2MB)</p>
+                    </div>
+                    <div id="upload-preview" style="display:none; text-align: center;">
+                        <div style="font-size:32px;">✅</div>
+                        <p id="file-name" style="font-weight:600;color:#059669;margin-top:6px;font-size:13px;"></p>
+                        <p style="font-size:12px;color:#6B7280;">Klik untuk mengganti</p>
+                    </div>
+                    <input type="file" name="bukti_pembayaran" required accept="image/*" onchange="previewFile(this)">
                 </label>
                 @error('bukti_pembayaran') <div class="invalid-feedback" style="display:block;">{{ $message }}</div> @enderror
             </div>
@@ -169,6 +176,15 @@
     });
     
     tglSelesai.addEventListener('change', hitungTotal);
+
+    function previewFile(input) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            document.getElementById('upload-placeholder').style.display = 'none';
+            document.getElementById('upload-preview').style.display     = 'block';
+            document.getElementById('file-name').textContent = file.name;
+        }
+    }
 </script>
 @endpush
 @endsection
