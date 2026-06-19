@@ -70,7 +70,13 @@ class AlatController extends Controller
         $total_harga = $days * $alat->harga_sewa;
 
         // Upload bukti
-        $buktiPath = $request->file('bukti_pembayaran')->store('bukti_sewa_alat', 'public');
+        $file = $request->file('bukti_pembayaran');
+        $ext = $file->getClientOriginalExtension();
+        $newName = time() . '_' . uniqid() . '.' . $ext;
+        $targetDir = public_path('uploads/bukti_sewa_alat');
+        if (! is_dir($targetDir)) mkdir($targetDir, 0755, true);
+        $file->move($targetDir, $newName);
+        $buktiPath = 'uploads/bukti_sewa_alat/' . $newName;
 
         PenyewaanAlat::create([
             'user_id' => auth()->id(),

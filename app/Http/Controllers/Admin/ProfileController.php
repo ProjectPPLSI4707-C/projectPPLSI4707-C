@@ -107,9 +107,16 @@ class ProfileController extends Controller
                 }
             }
 
-            // Store using Storage facade for Laravel Cloud compatibility
-            $path = $request->file('profile_photo')->store('profiles', 'public');
-            $validated['profile_photo'] = $path;
+            $ext      = $file->getClientOriginalExtension();
+            $newName  = $user->id . '_' . time() . '.' . $ext;
+            $targetDir = public_path('uploads/profile_photos');
+
+            if (! is_dir($targetDir)) {
+                mkdir($targetDir, 0755, true);
+            }
+
+            $file->move($targetDir, $newName);
+            $validated['profile_photo'] = 'uploads/profile_photos/' . $newName;
         }
 
         $user->update($validated);

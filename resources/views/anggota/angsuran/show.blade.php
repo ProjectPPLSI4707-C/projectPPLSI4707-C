@@ -67,8 +67,8 @@
     @if($angsuran->bukti_bayar)
     <div style="background: var(--gray-50); border-radius: 8px; padding: 16px; text-align: center; margin-bottom: 24px;">
         <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 12px; font-weight: 600;">BUKTI PEMBAYARAN</div>
-        <a href="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($angsuran->bukti_bayar) }}" target="_blank" style="display: inline-block; background: #fff; padding: 8px; border: 1px solid var(--gray-200); border-radius: 8px;">
-            <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($angsuran->bukti_bayar) }}" alt="Bukti Pembayaran" style="max-height: 200px; max-width: 100%; border-radius: 4px; object-fit: contain;">
+        <a href="{{ asset($angsuran->bukti_bayar) }}" target="_blank" style="display: inline-block; background: #fff; padding: 8px; border: 1px solid var(--gray-200); border-radius: 8px;">
+            <img src="{{ asset($angsuran->bukti_bayar) }}" alt="Bukti Pembayaran" style="max-height: 200px; max-width: 100%; border-radius: 4px; object-fit: contain;">
         </a>
         <div style="font-size: 11px; color: var(--gray-400); margin-top: 8px;">Klik gambar untuk melihat lebih besar</div>
     </div>

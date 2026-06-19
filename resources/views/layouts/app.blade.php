@@ -813,11 +813,7 @@
         $sidebarUser = auth()->user();
         $sidebarHasPhoto = filled($sidebarUser->profile_photo);
         if ($sidebarHasPhoto) {
-            if (str_starts_with($sidebarUser->profile_photo, 'uploads/')) {
-                $sidebarPhotoUrl = asset($sidebarUser->profile_photo);
-            } else {
-                $sidebarPhotoUrl = \Illuminate\Support\Facades\Storage::disk('public')->url($sidebarUser->profile_photo);
-            }
+            $sidebarPhotoUrl = asset($sidebarUser->profile_photo);
         }
     @endphp
 

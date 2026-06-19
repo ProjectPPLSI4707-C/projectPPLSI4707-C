@@ -50,7 +50,7 @@
             <label style="display:block; font-weight: 500; margin-bottom: 8px;">Gambar Alat</label>
             @if($alat->gambar)
                 <div style="margin-bottom: 10px;">
-                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($alat->gambar) }}" alt="Gambar Lama" style="max-height: 100px; border-radius: 8px;">
+                    <img src="{{ asset($alat->gambar) }}" alt="Gambar Lama" style="max-height: 100px; border-radius: 8px;">
                 </div>
             @endif
             <input type="file" name="gambar" accept="image/*" class="form-control" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff;">

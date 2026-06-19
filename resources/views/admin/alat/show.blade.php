@@ -66,7 +66,7 @@
             <div class="card-title">🔧 Informasi Alat</div>
             <div style="display:flex; gap:16px; align-items:flex-start;">
                 @if($penyewaan->alat->gambar)
-                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($penyewaan->alat->gambar) }}"
+                    <img src="{{ asset($penyewaan->alat->gambar) }}"
                          style="width:80px; height:80px; object-fit:cover; border-radius:10px; flex-shrink:0;" alt="Foto Alat">
                 @else
                     <div style="width:80px; height:80px; background:var(--gray-100); border-radius:10px; display:flex; align-items:center;
@@ -151,12 +151,12 @@
             @if($penyewaan->bukti_pembayaran)
                 <div style="border-radius:12px; overflow:hidden; border:1px solid var(--gray-200); cursor:pointer;"
                      onclick="document.getElementById('modalBukti').style.display='flex'">
-                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($penyewaan->bukti_pembayaran) }}"
+                    <img src="{{ asset($penyewaan->bukti_pembayaran) }}"
                          alt="Bukti Pembayaran"
                          style="width:100%; max-height:320px; object-fit:contain; display:block; background:var(--gray-50);">
                 </div>
                 <div style="text-align:center; margin-top:8px;">
-                    <a href="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($penyewaan->bukti_pembayaran) }}" target="_blank"
+                    <a href="{{ asset($penyewaan->bukti_pembayaran) }}" target="_blank"
                        style="font-size:12px; color:var(--navy); font-weight:600; text-decoration:none;">
                         🔗 Buka di tab baru
                     </a>
@@ -166,7 +166,7 @@
                 <div id="modalBukti" onclick="this.style.display='none'"
                      style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.85); z-index:9999;
                             align-items:center; justify-content:center; cursor:zoom-out;">
-                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($penyewaan->bukti_pembayaran) }}"
+                    <img src="{{ asset($penyewaan->bukti_pembayaran) }}"
                          style="max-width:90vw; max-height:90vh; border-radius:12px; box-shadow:0 20px 60px rgba(0,0,0,.5);"
                          alt="Bukti Pembayaran Zoom">
                 </div>

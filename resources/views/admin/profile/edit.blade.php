@@ -8,9 +8,7 @@
         ? file_exists(public_path($user->profile_photo))
         : (filled($user->profile_photo) && Storage::disk('public')->exists($user->profile_photo));
     $profilePhotoUrl = $hasProfilePhoto
-        ? ($storedInPublicUploads
-            ? asset($user->profile_photo) . '?v=' . md5($user->profile_photo)
-            : \Illuminate\Support\Facades\Storage::disk('public')->url($user->profile_photo) . '?v=' . md5($user->profile_photo))
+        ? asset($user->profile_photo) . '?v=' . md5($user->profile_photo)
         : null;
 @endphp
 

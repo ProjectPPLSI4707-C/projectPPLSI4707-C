@@ -62,7 +62,7 @@
         <div class="card">
             <div class="card-title">📸 Bukti Transfer</div>
             @if($angsuran->bukti_bayar)
-                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($angsuran->bukti_bayar) }}" style="width:100%;border-radius:10px;border:1px solid #E5E7EB;" alt="Bukti Pembayaran">
+                <img src="{{ asset($angsuran->bukti_bayar) }}" style="width:100%;border-radius:10px;border:1px solid #E5E7EB;" alt="Bukti Pembayaran">
             @else
                 <div style="text-align:center;padding:40px 0;color:#9CA3AF;">
                     <div style="font-size:30px;margin-bottom:10px;">🚫</div>
